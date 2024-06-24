@@ -1,4 +1,4 @@
-# LLM_and_RAG-
+# LLMs_and_RAG
 
 Introduction to LLMs and RAG
 

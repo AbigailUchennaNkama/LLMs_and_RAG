@@ -170,30 +170,3 @@ def rag_with_keyword_search(llm_client, es_client, query, llm_model="llama3-8b-8
     prompt = build_prompt(query, search_results)
     answer = llm(prompt, llm_client, llm_model)
     return answer
-
-# # Example usage
-# with open('documents-with-ids.json', 'rt') as f_in:
-#     documents = json.load(f_in)
-
-# # Use vector search
-# question = "What is data engineering?"
-# answer = rag_with_vector_search(
-#     llm_client=llm_client,
-#     es_client=es_client,
-#     query=question,
-#     course="data-engineering-zoomcamp",
-#     model_encode='multi-qa-MiniLM-L6-cos-v1',
-#     vector_field="question_text_vector",
-#     llm_model="llama3-8b-8192"
-# )
-# print("Answer using vector search:", answer)
-
-# # Use keyword search
-# answer = rag_with_keyword_search(
-#     llm_client=llm_client,
-#     es_client=es_client,
-#     query=question,
-#     course="data-engineering-zoomcamp",
-#     llm_model="llama3-8b-8192"
-# )
-# print("Answer using keyword search:", answer)

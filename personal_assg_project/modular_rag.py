@@ -49,7 +49,11 @@ def create_index(es_client, index_name="course-questions", use_vectors=True):
         }
         index_settings["mappings"]["properties"].update(vector_fields)
 
-    es_client.indices.delete(index=index_name, ignore=[400, 404])
+    # Delete the existing index if it exists
+    if es_client.indices.exists(index=index_name):
+        es_client.indices.delete(index=index_name)
+
+    # Create the new index
     es_client.indices.create(index=index_name, body=index_settings)
     print(f"Index '{index_name}' created successfully.")
 
@@ -140,21 +144,18 @@ def llm(prompt, client, llm_model):
     print(response.choices[0].message.content)
     return response.choices[0].message.content
 
-def rag(llm_client, es_client, query, course="data-engineering-zoomcamp", use_vector=False, vector_field=None, llm_model="llama3-8b-8192"):
+def rag(llm_client, es_client, query, course="data-engineering-zoomcamp",
+        use_vector=False, vector_field=None, llm_model="llama3-8b-8192"):
     search_results = elastic_search(es_client, query, use_vector=use_vector, vector_field='question_text_vector', course=course)
     prompt = build_prompt(query, search_results)
     answer = llm(prompt, llm_client, llm_model)
     return answer
 
-# Example usage:
-# create_index(es_client, use_vectors=True)
-#
-# with open('documents.json', 'r') as f:
-#     documents = json.load(f)
-#
-# model = SentenceTransformer('multi-qa-MiniLM-L6-cos-v1')
-# index_documents(es_client, documents, model=model)
-#
-# query = "What is data engineering?"
-# result = rag(llm_client, es_client, query, use_vector=True, vector_field="question_text_vector")
-# print(result)
+def rag_system(documents, llm_client, es_client, query, course="data-engineering-zoomcamp",
+        use_vector=False, vector_field=None, llm_model="llama3-8b-8192"):
+    create_index(es_client, index_name="course-questions", use_vectors=True)
+    index_documents(es_client, documents, index_name="course-questions", model=None)
+    search_results = elastic_search(es_client, query, use_vector=use_vector, vector_field=None, course=course)
+    prompt = build_prompt(query, search_results)
+    answer = llm(prompt, llm_client, llm_model)
+    return answer

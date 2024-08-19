@@ -1,182 +1,109 @@
 import streamlit as st
 from elasticsearch import Elasticsearch
-from sentence_transformers import SentenceTransformer
 from groq import Groq
+from sentence_transformers import SentenceTransformer
 import json
-from tqdm import tqdm
-
-# Initialize Elasticsearch and LLM clients
+from modular_rag import create_index, index_documents, elastic_search, build_prompt, llm, rag
+# Initialize clients
 es_client = Elasticsearch('http://localhost:9200')
-client = Groq(api_key="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")
+llm_client = Groq(api_key="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")
 
-# Function to create a keyword index
-def create_keyword_index(es_client, index_name):
-    index_settings = {
-        "settings": {"number_of_shards": 1, "number_of_replicas": 0},
-        "mappings": {
-            "properties": {
-                "text": {"type": "text"},
-                "section": {"type": "text"},
-                "question": {"type": "text"},
-                "course": {"type": "keyword"},
-            }
-        },
-    }
-    es_client.indices.create(index=index_name, body=index_settings)
-    st.success(f"Keyword index '{index_name}' created successfully.")
+# Include all the functions from the previous code here (create_index, index_documents, elastic_search, build_prompt, llm, rag)
 
-# Function to create a vector index
-def create_vector_index(es_client, index_name):
-    index_settings = {
-        "settings": {"number_of_shards": 1, "number_of_replicas": 0},
-        "mappings": {
-            "properties": {
-                "text": {"type": "text"},
-                "section": {"type": "text"},
-                "question": {"type": "text"},
-                "course": {"type": "keyword"},
-                "id": {"type": "keyword"},
-                "question_vector": {
-                    "type": "dense_vector",
-                    "dims": 384,
-                    "index": True,
-                    "similarity": "cosine",
-                },
-                "text_vector": {
-                    "type": "dense_vector",
-                    "dims": 384,
-                    "index": True,
-                    "similarity": "cosine",
-                },
-                "question_text_vector": {
-                    "type": "dense_vector",
-                    "dims": 384,
-                    "index": True,
-                    "similarity": "cosine",
-                },
-            }
-        },
-    }
-    es_client.indices.delete(index=index_name, ignore=[400, 404])
-    es_client.indices.create(index=index_name, body=index_settings)
-    st.success(f"Vector index '{index_name}' created successfully.")
+# Streamlit app
+st.title("Course Q&A Assistant")
 
-# Function to encode and index documents for vector search
-def encode_and_index_documents(es_client, index_name, model, documents):
-    for doc in tqdm(documents, desc="Encoding documents"):
-        question = doc['question']
-        text = doc['text']
-        qt = question + ' ' + text
-        doc['question_vector'] = model.encode(question).tolist()
-        doc['text_vector'] = model.encode(text).tolist()
-        doc['question_text_vector'] = model.encode(qt).tolist()
+# Sidebar for configuration
+st.sidebar.header("Search Configuration")
 
-    for doc in tqdm(documents, desc="Indexing documents"):
-        try:
-            es_client.index(index=index_name, document=doc)
-        except Exception as e:
-            st.error(f"Error indexing document {doc['id']}: {e}")
+# Search type selection
+search_type = st.sidebar.radio("Select Search Type", ["Keyword", "Vector"])
 
-# Function for keyword search
-def keyword_elastic_search(es_client, index_name, query):
-    search_query = {
-        "size": 5,
-        "query": {
-            "bool": {
-                "must": {
-                    "multi_match": {
-                        "query": query,
-                        "fields": ["question^3", "text", "section"],
-                        "type": "best_fields",
-                    }
-                },
-                "filter": {
-                    "term": {"course": "data-engineering-zoomcamp"}
-                },
-            }
-        },
-    }
-    response = es_client.search(index=index_name, body=search_query)
-    return [hit["_source"] for hit in response["hits"]["hits"]]
-
-# Function for vector search
-def vector_elastic_search(es_client, index_name, field, vector, course):
-    knn = {
-        "field": field,
-        "query_vector": vector,
-        "k": 5,
-        "num_candidates": 10000,
-        "filter": {"term": {"course": course}},
-    }
-    search_query = {"knn": knn, "_source": ["text", "section", "question", "course", "id"]}
-    es_results = es_client.search(index=index_name, body=search_query)
-    return [hit["_source"] for hit in es_results["hits"]["hits"]]
-
-# Function to build the prompt for LLM
-def build_prompt(query, search_results):
-    prompt_template = """
-    You're a course teaching assistant. Answer the QUESTION based on the CONTEXT from the FAQ database.
-    Use only the facts from the CONTEXT when answering the QUESTION.
-
-    QUESTION: {question}
-
-    CONTEXT:
-    {context}
-    """.strip()
-    context = "\n\n".join([f"section: {doc['section']}\nquestion: {doc['question']}\nanswer: {doc['text']}" for doc in search_results])
-    return prompt_template.format(question=query, context=context).strip()
-
-# Function to generate the answer using LLM
-def llm(prompt, client, llm_model):
-    response = client.chat.completions.create(
-        messages=[{"role": "user", "content": prompt}],
-        model=llm_model,
+#select course
+course = st.sidebar.selectbox(
+        "Select course",
+        ['data-engineering-zoomcamp', 'machine-learning-zoomcamp',
+       'mlops-zoomcamp']
     )
-    return response.choices[0].message.content
+# Vector field selection (only show if vector search is selected)
+vector_field = None
+if search_type == "Vector":
+    vector_field = st.sidebar.selectbox(
+        "Select Vector Field",
+        ["question_vector", "text_vector", "question_text_vector"]
+    )
 
-# Function to handle the RAG process
-def rag(query, index_name="course-questions", use_vector_search=False, vector_field=None, vector=None, llm_model="llama3-8b-8192"):
-    if use_vector_search and vector_field and vector is not None:
-        search_results = vector_elastic_search(es_client, index_name, vector_field, vector, "data-engineering-zoomcamp")
-    else:
-        search_results = keyword_elastic_search(es_client, index_name, query)
-    prompt = build_prompt(query, search_results)
-    answer = llm(prompt, client, llm_model)
-    return answer
+# LLM model selection
+llm_models = ["llama3-8b-8192", "llama3-70b-4096", "mixtral-8x7b-32768"]  # Add more models as needed
+selected_llm_model = st.sidebar.selectbox("Select LLM Model", llm_models)
 
-# Streamlit UI
-st.title("RAG System with Elasticsearch and LLM")
+# Vector encoding model selection (only show if vector search is selected)
 
-# Select the type of search
-search_type = st.selectbox("Select Search Type", ["Keyword Search", "Vector Search"])
+if search_type == "Vector":
+    vector_encoding_models = ["multi-qa-MiniLM-L6-cos-v1", "all-mpnet-base-v2", "all-MiniLM-L6-v2"]  # Add more models as needed
+    selected_vector_model = None
+    selected_vector_model = st.sidebar.selectbox("Select Vector Encoding Model", vector_encoding_models)
 
-# Select the LLM model
-llm_model = st.selectbox("Select LLM Model", ["llama3-8b-8192", "llama2-7b", "other-models"])
+# Main app area
+st.header("Ask a Question")
+user_question = st.text_input("Enter your question here:")
 
-# Input for user query
-query = st.text_input("Enter your query")
-
-# Optionally select vector field (for vector search)
-# vector_field = None
-# if search_type == "Vector Search":
-#     #vector_field = st.text_input("Enter vector field", value="question_text_vector")
-
-# Submit button
 if st.button("Get Answer"):
-    # Ensure the index exists
-    index_name = "course-questions"
-    if not es_client.indices.exists(index=index_name):
-        create_vector_index(es_client, index_name)
+    if user_question:
+        with st.spinner("Searching for answer..."):
+            if search_type == "Vector Search":
+                try:
+                    answer = rag(
+                        llm_client,
+                        es_client,
+                        user_question,
+                        use_vector=(search_type == "Vector"),
+                        vector_field=vector_field,
+                        llm_model=selected_llm_model
+                    )
+                    st.success("Answer found!")
+                    st.write(answer)
+                except Exception as e:
+                    st.error(f"An error occurred: {str(e)}")
+            else:
+                st.warning("Please enter a valid question.")
 
-    # Perform RAG process based on selected search type
-    if search_type == "Vector Search":
-        # Use a pre-encoded vector for the query
-        model = SentenceTransformer("all-mpnet-base-v2")
-        query_vector = model.encode(query).tolist()
-        answer = rag(query, use_vector_search=True, vector_field="question_text_vector", vector=query_vector, llm_model=llm_model)
-    else:
-        answer = rag(query, use_vector_search=False, llm_model=llm_model)
+# Optional: Add buttons for index creation and document indexing
+st.sidebar.header("Manual answer generation")
+if st.button("Manual answer generation"):
+    user_question2 = st.text_input("Enter your question here:")
+    search_type = st.sidebar.radio("Select Search Type", ["Keyword", "Vector"])
+    if st.sidebar.button("Create Index"):
+        create_index(es_client, use_vectors=(search_type == "Vector"))
+        st.sidebar.success("Index created successfully!")
 
-    # Display the answer
-    st.subheader("Generated Answer")
-    st.write(answer)
+    if st.sidebar.button("Index Documents"):
+        # You'll need to load your documents here
+        with open('/home/nkama/LLM_and_RAG_Course/LLM_and_RAG-/personal_assg_project/data/documents-with-ids.json', 'r') as f:
+            documents = json.load(f)
+
+        if search_type == "Vector":
+            model = SentenceTransformer(selected_vector_model)
+            index_documents(es_client, documents, model=model)
+        else:
+            index_documents(es_client, documents)
+        st.sidebar.success("Documents indexed successfully!")
+    if user_question2:
+        with st.spinner("Searching for answer..."):
+            if search_type == "Vector Search":
+                try:
+                    answer = rag(
+                        llm_client,
+                        es_client,
+                        user_question,
+                        use_vector=(search_type == "Vector"),
+                        vector_field=vector_field,
+                        llm_model=selected_llm_model
+                    )
+                    st.success("Answer found!")
+                    st.write(answer)
+                except Exception as e:
+                    st.error(f"An error occurred: {str(e)}")
+            else:
+                st.warning("Please enter a valid question.")
+# Run the app with: streamlit run your_app_name.py

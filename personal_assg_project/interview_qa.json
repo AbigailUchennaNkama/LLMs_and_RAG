@@ -1,0 +1,1052 @@
+[
+  {
+    "doc_id": "qa_001",
+    "question": "Given two arrays, write a python function to return the intersection of the two? For example, X = [1,5,9,0] and Y = [3,0,2,9] it should return [9,0]",
+    "answer": "set(X).intersect (set(Y))",
+    "course": "python"
+  },
+  {
+    "doc_id": "qa_002",
+    "question": "Given an array, find all the duplicates in this array? For example: input: [1,2,3,1,3,6,5] output: [1,3]",
+    "answer": "set1=set()\nres=set()\nfor i in list:\n  if i in set1:\n    res.add(i)\n  else:\n    set1.add(i)\nprint(res)",
+    "course": "python"
+  },
+  {
+    "doc_id": "qa_003",
+    "question": "Given an integer array, return the maximum product of any three numbers in the array?",
+    "answer": "import heapq\n\ndef max_three(arr):\n    a = heapq.nlargest(3, arr) # largerst 3 numbers for postive case\n    b = heapq.nsmallest(2, arr) # for negative case\n    return max(a[2]*a[1]*a[0], b[1]*b[0]*a[0])",
+    "course": "python"
+  },
+  {
+    "doc_id": "qa_004",
+    "question": "Given an integer array, find the sum of the largest contiguous subarray within the array. For example, given the array A = [0,-1,-5,-2,3,14] it should return 17 because of [3,14]. Note that if all the elements are negative it should return zero.",
+    "answer": "def max_subarray(arr):\n  n = len(arr)\n  max_sum = arr[0] #max\n  curr_sum = 0 \n  for i in range(n):\n    curr_sum += arr[i]\n    max_sum = max(max_sum, curr_sum)\n    if curr_sum <0:\n      curr_sum  = 0\n  return max_sum",
+    "course": "python"
+  },
+  {
+    "doc_id": "qa_005",
+    "question": "Define tuples and lists in Python What are the major differences between them?",
+    "answer": "Lists: In Python, a list is created by placing elements inside square brackets [], separated by commas. A list can have any number of items and they may be of different types (integer, float, string, etc.). A list can also have another list as an item. This is called a nested list.\nLists are mutable\nLists are better for performing operations, such as insertion and deletion.\nLists consume more memory\nLists have several built-in methods\nTuples: A tuple is a collection of objects which ordered and immutable. Tuples are sequences, just like lists. The differences between tuples and lists are, the tuples cannot be changed unlike lists and tuples use parentheses, whereas lists use square brackets.\nTuples are immutable\nTuple data type is appropriate for accessing the elements\nTuples consume less memory as compared to the list\nTuple does not have many built-in methods.\nMutable = we can change, add, delete and modify stuff\nImmutable = we cannot change, add, delete and modify stuff",
+    "course": "python"
+  },
+  {
+    "doc_id": "qa_006",
+    "question": "Compute the Euclidean Distance Between Two Series?",
+    "answer": "To compute the **Euclidean distance** between two series (vectors) in Python, you can use the formula:\n\n\\[\n\\text{Euclidean Distance} = \\sqrt{\\sum_{i=1}^{n} (x_i - y_i)^2}\n\\]\n\nWhere:\n- \\( x_i \\) and \\( y_i \\) are the corresponding elements in the two series (vectors).\n- \\( n \\) is the number of elements in the series.\n\nHere’s a simple Python code to compute the Euclidean distance between two series:\n\nUsing NumPy:\n```python\nimport numpy as np\n\ndef euclidean_distance(series1, series2):\n    # Ensure both series have the same length\n    if len(series1) != len(series2):\n        raise ValueError(\"Series must have the same length\")\n    \n    # Compute the Euclidean distance\n    distance = np.sqrt(np.sum((np.array(series1) - np.array(series2)) ** 2))\n    \n    return distance\n\nExample usage\nseries1 = [1, 2, 3]\nseries2 = [4, 5, 6]\n\ndistance = euclidean_distance(series1, series2)\nprint(f'Euclidean Distance: {distance}')\n```\n\nExplanation:\n- Convert the two input series to NumPy arrays: `np.array(series1)` and `np.array(series2)`.\n- Subtract the two arrays element-wise and square the result: `(series1 - series2) ** 2`.\n- Sum the squared differences using `np.sum()`.\n- Take the square root of the result using `np.sqrt()` to get the Euclidean distance.\n\n### Example:\nFor the series:\n- Series 1: \\([1, 2, 3]\\)\n- Series 2: \\([4, 5, 6]\\)\n\nThe Euclidean distance is computed as:\n\\[\n\\sqrt{(1-4)^2 + (2-5)^2 + (3-6)^2} = \\sqrt{9 + 9 + 9} = \\sqrt{27} \\approx 5.196\n\\]\n\nThis approach is efficient and works well for series or vectors of any size.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_007",
+    "question": "Given an integer n and an integer K, output a list of all of the combination of k numbers chosen from 1 to n. For example, if n=3 and k=2, return [1,2],[1,3],[2,3]",
+    "answer": "from itertools import combinations\ndef find_combintaion(k,n):\n    list_num = []\n    comb = combinations([x for x in range(1, n+1)],k)\n    for i in comb:\n        list_num.append(i)\n    print(\"(K:{},n:{}):\".format(k,n))\n    print(list_num,\"\\n\")",
+    "course": "python"
+  },
+  {
+    "doc_id": "qa_008",
+    "question": "Write a function to generate N samples from a normal distribution and plot them on the histogram",
+    "answer": "Using bultin Libraries:\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.random.randn((N,))\nplt.hist(x)\nFrom scratch:",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_009",
+    "question": "What is the difference between apply and applymap function in pandas?",
+    "answer": "Both the methods only accept callables as arguments but what sets them apart is that applymap is defined on dataframes and works element-wise. While apply can be defined on data frames as well as series and can work row/column-wise as well as element-wise. In terms of use case, applymap is used for transformations while apply is used for more complex operations and aggregations. Applymap only returns a dataframe while apply can return a scalar value, series, or dataframe.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0010",
+    "question": "Given a string, return the first recurring character in it, or “None” if there is no recurring character. Example: input = \"pythoninterviewquestion\" , output = \"n\"",
+    "answer": "input_string = \"pythoninterviewquestion\"\n\ndef first_recurring(input_str):\n  \n  a_str = \"\"\n  for letter in input_str:\n    a_str = a_str + letter\n    if a_str.count(letter) > 1:\n      return letter\n  return None\n\nfirst_recurring(input_string)",
+    "course": "python"
+  },
+  {
+    "doc_id": "qa_0011",
+    "question": "Given a positive integer X return an integer that is a factorial of X. If a negative integer is provided, return -1. Implement the solution by using a recursive function.",
+    "answer": "def factorial(x):\n    # Edge cases\n    if x < 0: return -1\n    if x == 0: return 1\n    \n    # Exit condition - x = 1\n    if x == 1:\n        return x\n    else:\n        # Recursive part\n        return x * factorial(x - 1)",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0012",
+    "question": "Given an m-by-n matrix with positive integers, determine the length of the longest path of increasing within the matrix. For example, consider the input matrix:\n    [ 1 2 3 ]\n    \n    [ 4 5 6 ]\n    \n    [ 7 8 9 ]        \n    \n    The correct answer should be 5 since the longest path would be 1-2-5-6-9",
+    "answer": "MAX = 10\n\ndef Longest_Increasing_Path(dp, mat, n, m, x, y):\n     \n    # If value not calculated yet.\n    if (dp[x][y] < 0):\n        result = 0\n         \n        #  // If reach bottom right cell, return 1\n        if (x == n - 1 and y == m - 1):\n            dp[x][y] = 1\n            return dp[x][y]\n \n        # If reach the corner\n        # of the matrix.\n        if (x == n - 1 or y == m - 1):\n            result = 1\n \n        # If value greater than below cell.\n        if (x + 1 < n and mat[x][y] < mat[x + 1][y]):\n            result = 1 + LIP(dp, mat, n,\n                            m, x + 1, y)\n \n        # If value greater than left cell.\n        if (y + 1 < m and mat[x][y] < mat[x][y + 1]):\n            result = max(result, 1 + LIP(dp, mat, n,\n                                        m, x, y + 1))\n        dp[x][y] = result\n    return dp[x][y]\n \n# Wrapper function\ndef wrapper(mat, n, m):\n    dp = [[-1 for i in range(MAX)]\n            for i in range(MAX)]\n    return Longest_Increasing_Path(dp, mat, n, m, 0, 0)",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0013",
+    "question": "𝐄𝐱𝐩𝐥𝐚𝐢𝐧 𝐰𝐡𝐚𝐭 𝐅𝐥𝐚𝐬𝐤 𝐢𝐬 𝐚𝐧𝐝 𝐢𝐭𝐬 𝐛𝐞𝐧𝐞𝐟𝐢𝐭𝐬",
+    "answer": "Flask is a web framework. This means flask provides you with tools, libraries, and technologies that allow you to build a web application. This web application can be some web pages, a blog, a wiki, or go as big as a web-based calendar application or a commercial website.\nBenefits of Flask:\nScalable Flask’s status as a microframework means that it can be used to grow a tech project such as a web app very quickly.\nFlexible It allows the project to be rearranged and moved around. Also makes sure that the project structure does not collapse when a part is altered.\nEasy to negotiate At its core, the microframework is easy to understand for web developers also giving them more control over their code and what is possible.\nLightweight Certain parts of a design of a tool/framework might need assembling and reassembling and do not rely on a large number of extensions to function which gives web developers a certain level of control. Further, Flask also supports modular programming, which is where its functionality can be split into several interchangeable modules and each module acts as an independent entity and executes a part of the functionality.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0014",
+    "question": "𝐖𝐡𝐚𝐭 𝐢𝐬 𝐭𝐡𝐞 𝐝𝐢𝐟𝐟𝐞𝐫𝐞𝐧𝐜𝐞 𝐛𝐞𝐭𝐰𝐞𝐞𝐧 𝐥𝐢𝐬𝐭𝐬, 𝐚𝐫𝐫𝐚𝐲𝐬, 𝐚𝐧𝐝 𝐬𝐞𝐭𝐬 𝐢𝐧 𝐏𝐲𝐭𝐡𝐨𝐧, 𝐚𝐧𝐝 𝐰𝐡𝐞𝐧 𝐲𝐨𝐮 𝐬𝐡𝐨𝐮𝐥𝐝 𝐮𝐬𝐞 𝐞𝐚𝐜𝐡 𝐨𝐟 𝐭𝐡𝐞𝐦?",
+    "answer": "All three are data structures that can store sequences of data. but with some differences.\nList denoted by [ ], set by { } , and array/tuple by ( )\n𝐋𝐢𝐬𝐭: built-in data type in Python that helps store data in sequence with a very rich API that allows insertion removal retrieval and expansion. one of its benefits is that it allows the use of many data types in the same lists as it can store string, integers, floats of any other derived objects. one of its cons that are very slow if it will be used in numerical computation.\n𝐀𝐫𝐫𝐚𝐲: on the other hand array can only store a single data type like integers only, float only, or any derived object only. but unlike lists, it's very efficient in terms of speed and memory usage (NumPy is one of the best libraries that implements array operations as it's a very rich library that solves many problems in numerical computation like vectorization, broadcasting, ...etc).\n𝐒𝐞𝐭: it's also a built-in data type in Python and can store more that data types. but it does not allow for the existence of duplicates and if there are duplicates it only uses one of them. provide a lot of methods like unions, diffs, and intersections.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0015",
+    "question": "What does one understand by the term Data Science?",
+    "answer": "An interdisciplinary field that constitutes various scientific processes, algorithms, tools, and machine learning techniques working to help find common patterns and gather sensible insights from the given raw input data using statistical and mathematical analysis is called Data Science. The following The life cycle of data science starts with gathering the business requirements and relevant data. Once the data is acquired, it is maintained by performing data cleaning, data warehousing, data staging, and data architecture. Data processing does the task of exploring the data, mining it, analyzing it which can be finally used to generate the summary of the insights extracted from the data. Once the exploratory steps are completed, the cleansed data is subjected to various algorithms like predictive analysis, regression, text mining, recognition patterns, etc depending on the requirements. In the final stage, the results are communicated to the business in a visually appealing manner. This is where the skill of data visualization, reporting, and different business intelligence tools come into the picture.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0016",
+    "question": "What do you understand by Survivorship Bias?",
+    "answer": "This bias refers to the logical error while focusing on aspects that survived some process and overlooking those that did not work due to lack of prominence. This bias can lead to deriving wrong conclusions.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0017",
+    "question": "Define the terms KPI, li , model fitting, robustness and DOE.",
+    "answer": "KPI: KPI stands for Key Performance Indicator that measures how well the business achieves its objectives. Li : This is a performance measure of the target model measured against a random choice model. Li indicates how good the model is at prediction versus if there was no model. Model fitting: This indicates how well the model under consideration fits given observations. Robustness: This represents the system’s capability to handle differences and variances effectively. DOE: stands for the design of experiments, which represents the task design aiming to describe and explain information variation under hypothesized conditions to reflect variables.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0018",
+    "question": "Define confounding variables.",
+    "answer": "Confounding variables are also known as confounders. These variables are a type of extraneous variables that influence both independent and dependent variables causing spurious association and mathematical relationships between those variables that are associated but are not casually related to each other.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0019",
+    "question": "What does it mean when the p-values are high and low?",
+    "answer": "A p-value is the measure of the probability of having results equal to or more than the results achieved under a specific hypothesis assuming that the null hypothesis is correct. This represents the probability that the observed difference occurred randomly by chance. Low p-value which means values ≤ 0.05 means that the null hypothesis can be rejected and the data is unlikely with true null. High p-value, i.e values ≥ 0.05 indicates the strength in favor of the null hypothesis. It means that the data is like with true null. p-value = 0.05 means that the hypothesis can go either way.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0020",
+    "question": "When is resampling done?",
+    "answer": "Resampling is a methodology used to sample data for improving accuracy and quantify the uncertainty of population parameters. It is done to ensure the model is good enough by training the model on different patterns of a dataset to ensure variations are handled. It is also done in the cases where models need to be validated using random subsets or when substituting labels on data points while performing tests.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0021",
+    "question": "What do you understand by Imbalanced Data?",
+    "answer": "Data is said to be highly imbalanced if it is distributed unequally across different categories. These datasets result in an error in model performance and result in inaccuracy.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0022",
+    "question": "What are Eigenvectors and Eigenvalues?",
+    "answer": "Data Science Interview Questions Eigenvectors are column vectors or unit vectors whose length/magnitude is equal to 1. They are also called right vectors. Eigenvalues are coefficients that are applied on eigenvectors which give these vectors different values for length or magnitude. A matrix can be decomposed into Eigenvectors and Eigenvalues and this process is called Eigen decomposition. These are then eventually used in machine learning methods like PCA (Principal Component Analysis) for gathering valuable insights from the given matrix.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0023",
+    "question": "How are the time series problems different from other regression problems?",
+    "answer": "Time series data can be thought of as an extension to linear regression which uses terms like autocorrelation, movement of averages for summarizing historical data of y-axis variables for predicting a better future. Forecasting and prediction is the main goal of time series problems where accurate predictions can be made but sometimes the underlying reasons might not be known. Having Time in the problem does not necessarily mean it becomes a time series problem. There should be a relationship between target and time for a problem to become a time series problem. The observations close to one another in time are expected to be similar to the ones far away which provide accountability for seasonality. For instance, today’s weather would be similar to tomorrow’s weather but not similar to weather from 4 months from today. Hence, weather prediction based on past data becomes a time series problem.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0024",
+    "question": "Suppose there is a dataset having variables with missing values of more than 30%, how will you deal with such a dataset?",
+    "answer": "Depending on the size of the dataset, we follow the below ways: In case the datasets are small, the missing values are substituted with the mean or average of the remaining data. In pandas, this can be done by using mean = df.mean() where df represents the pandas dataframe representing the dataset and mean() calculates the mean of the data. To substitute the missing values with the calculated mean, we can use df.fillna(mean) . For larger datasets, the rows with missing values can be removed and the remaining data can be used for data prediction.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0025",
+    "question": "What is Cross-Validation?",
+    "answer": "Cross-Validation is a Statistical technique used for improving a model’s performance. Here, the model will be trained and tested with rotation using different samples of the training dataset to ensure that the model performs well for unknown data. The training data will be split into various groups and the model is run and validated against these groups in rotation. The most commonly used techniques are: \nK- Fold method \nLeave p-out method \nLeave-one-out method \nHoldout method",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0026",
+    "question": "What are the differences between correlation and covariance?",
+    "answer": "Although these two terms are used for establishing a relationship and dependency between any two random variables, the following are the differences between them:\nCorrelation: This technique is used to measure and estimate the quantitative relationship between two variables and is measured in terms of how strong are the variables related. \nCovariance: It represents the extent to which the variables change together in a cycle. This explains the systematic relationship between pair of variables where changes in one affect changes in another variable. \nMathematically, consider 2 random variables, X and Y where the means are represented as μX and μY respectively and standard deviations are represented by σX and σY respectively and E represents the expected value operator, then: covarianceXY = E[(X-μX),(Y-μY)] \ncorrelationXY = E[(X-μX),(Y-μY)]/(σXσY) \nso that\ncorrelation(X,Y) = covariance(X,Y)/(covariance(X) covariance(Y)).\nBased on the above formula, we can deduce that the correlation is dimensionless whereas covariance is represented in units that are obtained from the multiplication of units of two variables.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0027",
+    "question": "How do you approach solving any data analytics based project?",
+    "answer": "Generally, we follow the below steps: First step is to thoroughly understand the business requirement/problem Next, explore the given data and analyze it carefully. If you find any data missing, get the requirements clarified from the business. Data cleanup and preparation step is to be performed next which is then used for modeling. Here, the missing values are found and the variables are transformed. Run your model against the data, build meaningful visualization and analyze the results to get meaningful insights. Release the model implementation, track the results and performance over a specified period to analyze the usefulness. Perform cross-validation of the model.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0028",
+    "question": "Why do we need selection bias?",
+    "answer": "Selection Bias happens in cases where there is no randomization specifically achieved while picking a part of the dataset for analysis. This bias tells that the sample analyzed does not represent the whole population meant to be analyzed. For example, in the below image, we can see that the sample that we selected does not entirely represent the whole population that we have. This helps us to question whether we have selected the right data for analysis or not.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0029",
+    "question": "Why is data cleaning crucial?",
+    "answer": "How do you clean the data? While running an algorithm on any data, to gather proper insights, it is very much necessary to have correct and clean data that contains only relevant information. Dirty data most often results in poor or incorrect insights and predictions which can have damaging effects. For example, while launching any big campaign to market a product, if our data analysis tells us to target a product that in reality has no demand and if the campaign is launched, it is bound to fail. This results in a loss of the company’s revenue. This is where the importance of having proper and clean data comes into the picture.\nData Cleaning of the data coming from different sources helps in data transformation and results in the data where the data scientists can work on. Properly cleaned data increases the accuracy of the model and provides very good predictions. If the dataset is very large, then it becomes cumbersome to run data on it. The data cleanup step takes a lot of time (around 80% of the time) if the data is huge. It cannot be incorporated with running the model. Hence, cleaning data before running the model, results in increased speed and efficiency of the model. Data cleaning helps to identify and fix any structural issues in the data. It also helps in removing any duplicates and helps to maintain the consistency of the data.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0030",
+    "question": "What are the available feature selection methods for selecting the right variables for building efficient predictive models?",
+    "answer": "While using a dataset in data science or machine learning algorithms, it so happens that not all the variables are necessary and useful to build a model. Smarter feature selection methods are required to avoid redundant models to increase the efficiency of our model. Following are the three main methods in feature selection: Filter Methods: These methods pick up only the intrinsic properties of features that are measured via univariate statistics and not cross-validated performance. They are straightforward and are generally faster and require less computational resources when compared to wrapper methods. There are various filter methods such as the Chi-Square test, Fisher’s Score method, Correlation Coefficient, Variance Threshold, Mean Absolute Difference (MAD) method, Dispersion Ratios, etc.\nWrapper Methods: Data Science Interview Questions These methods need some sort of method to search greedily on all possible feature subsets, access their quality by learning and evaluating a classifier with the feature. The selection technique is built upon the machine learning algorithm on which the given dataset needs to fit. There are three types of wrapper methods, they are: Forward Selection: Here, one feature is tested at a time and new features are added until a good fit is obtained. Backward Selection: Here, all the features are tested and the nonfitting ones are eliminated one by one to see while checking which works better. Recursive Feature Elimination: The features are recursively checked and evaluated how well they perform. These methods are generally computationally intensive and require highend resources for analysis. But these methods usually lead to better predictive models having higher accuracy than filter methods.\nEmbedded Methods: Data Science Interview Questions Embedded methods constitute the advantages of both filter and wrapper methods by including feature interactions while maintaining reasonable computational costs. These methods are iterative as they take each model iteration and carefully extract features contributing to most of the training in that iteration. Examples of embedded methods: LASSO Regularization (L1), Random Forest Importance.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0031",
+    "question": "Will treating categorical variables as continuous variables result in a better predictive model?",
+    "answer": "Yes! A categorical variable is a variable that can be assigned to two or more categories with no definite category ordering. Ordinal variables are similar to categorical variables with proper and clear ordering defines. So, if the variable is ordinal, then treating the categorical value as a continuous variable will result in better predictive models.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0032",
+    "question": "How will you treat missing values during data analysis?",
+    "answer": "The impact of missing values can be known a er identifying what kind of variables have the missing values. If the data analyst finds any pattern in these missing values, then there are chances of finding meaningful insights. In case of patterns are not found, then these missing values can either be ignored or can be replaced with default values such as mean, minimum, maximum, or median values. If the missing values belong to categorical variables, then they are assigned with default values. If the data has a normal distribution, then mean values are assigned to missing values. If 80% values are missing, then it depends on the analyst to either replace them with default values or drop the variables.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0033",
+    "question": "What does the ROC Curve represent and how to create it?",
+    "answer": "ROC (Receiver Operating Characteristic) curve is a graphical representation of the contrast between false-positive rates and true positive rates at different thresholds. The curve is used as a proxy for a trade-off between sensitivity and specificity. The ROC curve is created by plotting values of true positive rates (TPR or sensitivity) against false-positive rates (FPR or (1-specificity)) TPR represents the proportion of observations correctly predicted as positive out of overall positive observations. The FPR represents the proportion of observations incorrectly predicted out of overall negative observations. Consider the example of medical testing, the TPR represents the rate at which people are correctly tested positive for a particular disease.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0034",
+    "question": "What are the differences between univariate, bivariate and multivariate analysis?",
+    "answer": "Statistical analyses are classified based on the number of variables processed at a given time.\nUnivariate analysis deals with solving only one variable at a given time. Example: Sales pie charts based on territory. While Bivariate analysis deals with the statistical study of two variables at a given time. Example: Scatterplot of Sales and spend volume analysis study. On the other hand, Multivariate analysis deals with statistical analysis of more than two variables and studies the responses. Example: Study of the relationship between human’s social media habits and their selfesteem which depends on multiple factors like age, number of hours spent, employment status, relationship status, etc.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0035",
+    "question": "What is the difference between the Test set and validation set?",
+    "answer": "The test set is used to test or evaluate the performance of the trained model. It evaluates the predictive power of the model. The validation set is part of the training set that is used to select parameters for avoiding model overfitting.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0036",
+    "question": "What do you understand by a kernel trick?",
+    "answer": "Kernel functions are generalized dot product functions used for the computing dot product of vectors xx and yy in high dimensional feature space. Kernal trick method is used for solving a non-linear problem by using a linear classifier by transforming linearly inseparable data into separable ones in higher dimensions.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0037",
+    "question": "Differentiate between box plot and histogram.",
+    "answer": "Box plots and histograms are both visualizations used for showing data distributions for efficient communication of information. Histograms are the bar chart representation of information that represents the frequency of numerical variable values that are useful in estimating probability distribution, variations and outliers. Boxplots are used for communicating different aspects of data distribution where the shape of the distribution is not seen but still the insights can be gathered. These are useful for comparing multiple charts at the same time as they take less space when compared to histograms.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0038",
+    "question": "How will you balance/correct imbalanced data?",
+    "answer": "There are different techniques to correct/balance imbalanced data. It can be done by increasing the sample numbers for minority classes. The number of samples can be decreased for those classes with extremely high data points. Following are some approaches followed to balance data: \nUse the right evaluation metrics: In cases of imbalanced data, it is very important to use the right evaluation metrics that provide valuable information.\nSpecificity/Precision: Indicates the number of selected instances that are relevant. \nSensitivity: Indicates the number of relevant instances that are selected. \nF1 score: It represents the harmonic mean of precision and sensitivity. \nMCC (Matthews correlation coefficient): It represents the correlation coefficient between observed and predicted binary classifications. \nAUC (Area Under the Curve): This represents a relation between the true positive rates and false-positive rates. \nFor example, consider the below graph that illustrates training data: Here, if we measure the accuracy of the model in terms of getting \"0\"s, then the accuracy of the model would be very high -> 99.9%, but the model does not guarantee any valuable information. In such cases, we can apply different evaluation metrics as stated above.\nTraining Set Resampling: It is also possible to balance data by working on getting different datasets and this can be achieved by resampling. There are two approaches followed under-sampling that is used based on the use case and the requirements: \nUnder-sampling This balances the data by reducing the size of the abundant class and is used when the data quantity is sufficient. By performing this, a new dataset that is balanced can be retrieved and this can be used for further modeling. \nOver-sampling This is used when data quantity is not sufficient. This method balances the dataset by trying to increase the samples size. Instead of getting rid of extra samples, new samples are generated and introduced by employing the methods of repetition, bootstrapping, etc. \nPerform K-fold cross-validation correctly: Cross-Validation needs to be applied properly while using over-sampling. The cross-validation should be done before over-sampling because if it is done later, then it would be like overfitting the model to get a specific result. To avoid this, resampling of data is done repeatedly with different ratios.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0039",
+    "question": "What is better - random forest or multiple decision trees?",
+    "answer": "Random forest is better than multiple decision trees as random forests are much more robust, accurate, and lesser prone to overfitting as it is an ensemble method that ensures multiple weak decision trees learn strongly.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0040",
+    "question": "Consider a case where you know the probability of finding at least one shooting star in a 15-minute interval is 30%. Evaluate the probability of finding at least one shooting star in a one-hour duration?",
+    "answer": "We know that, \nProbability of finding atleast 1 shooting star in 15 min = P(sighting in 15min) = 30% = Hence, Probability of not sighting any  shooting star in 15 min = 1-P(sighting in 15min) = 1-0.3 = 0.7 Probability of not finding shooting star in 1 hour = 0.7^4 = 0.1372 Probability of finding atleast 1  shooting star in 1 hour = 1-0.1372 = 0.8628 \nSo the probability is 0.8628 = 86.28%",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0041",
+    "question": "Toss the selected coin 10 times from a jar of 1000 coins. Out of 1000 coins, 999 coins are fair and 1 coin is double-headed, assume that you see 10 heads. Estimate the probability of getting a head in the next coin toss.",
+    "answer": "We know that there are two types of coins - fair and double-headed. Hence, there are two possible ways of choosing a coin. The first is to choose a fair coin and the second is to choose a coin having 2 heads. P(selecting fair coin) = 999/1000 = 0.999 P(selecting double headed coin) = 1/1000 = 0.001 \nUsing Bayes rule,\n(selecting 10 heads in row) = P(selecting fair coin)* Getting 10 heads + P(selecting d P(selecting 10 heads in row) = P(A)+P(B) P (A)  =  0.999 * (1/2)^10   =  0.999 * (1/1024)   =  0.000976 P (B)  =  0.001 * 1  =  0.001 P( A / (A + B) )  = 0.000976 /  (0.000976 + 0.001)                   P( B / (A + B))   = 0.001 / 0.001976   = 0.5061 P(selecting head in next toss) = P(A/A+B) * 0.5 + P(B/A+B) * 1  = 0.4939 * 0.5 + 0.5061   = 0.7531 So, the answer is 0.7531 or 75.3%. = 0.4939",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0042",
+    "question": "What are some examples when false positive has proven important than false negative?",
+    "answer": "Before citing instances, let us understand what are false positives and false negatives. False Positives are those cases that were wrongly identified as an event even if they were not. They are called Type I errors. False Negatives are those cases that were wrongly identified as non-events despite being an event. They are called Type II errors. Some examples where false positives were important than false negatives are:\nIn the medical field: Consider that a lab report has predicted cancer to a patient even if he did not have cancer. This is an example of a false positive error. It is dangerous to start chemotherapy for that patient as he doesn’t have cancer as starting chemotherapy would lead to damage of healthy cells and might even actually lead to cancer. In the e-commerce field: Suppose a company decides to start a campaign where they give $100 gi vouchers for purchasing $10000 worth of items without any minimum purchase conditions. They assume it would result in at least 20% profit for items sold above $10000. What if the vouchers are given to the customers who haven’t purchased anything but have been mistakenly marked as those who purchased $10000 worth of products. This is the case of falsepositive error. 34. Give one example where both false positives and false negatives are important equally? In Banking fields: Lending loans are the main sources of income to the banks. But if the repayment rate isn’t good, then there is a risk of huge losses instead of any profits. So giving out loans to customers is a gamble as banks can’t risk losing good customers but at the same time, they can’t afford to acquire bad customers. This case is a classic example of equal importance in false positive and false negative scenarios.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0043",
+    "question": "Is it good to do dimensionality reduction before fitting a Support Vector Model?",
+    "answer": "If the features number is greater than observations then doing dimensionality reduction improves the SVM (Support Vector Model).",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0044",
+    "question": "What are various assumptions used in linear regression?",
+    "answer": "What would happen if they are violated? Linear regression is done under the following assumptions:\nData Science Interview Questions The sample data used for modeling represents the entire population. There exists a linear relationship between the X-axis variable and the mean of the Y variable. The residual variance is the same for any X values. This is called homoscedasticity The observations are independent of one another. Y is distributed normally for any value of X. Extreme violations of the above assumptions lead to redundant results. Smaller violations of these result in greater variance or bias of the estimates.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0045",
+    "question": "How is feature selection performed using the regularization method?",
+    "answer": "The method of regularization entails the addition of penalties to different parameters in the machine learning model for reducing the freedom of the model to avoid the issue of overfitting. There are various regularization methods available such as linear model regularization, Lasso/L1 regularization, etc. The linear model regularization applies penalty over coefficients that multiplies the predictors. The Lasso/L1 regularization has the feature of shrinking some coefficients to zero, thereby making it eligible to be removed from the model.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0046",
+    "question": "How do you identify if a coin is biased?",
+    "answer": "To identify this, we perform a hypothesis test as below: According to the null hypothesis, the coin is unbiased if the probability of head flipping is 50%. According to the alternative hypothesis, the coin is biased and the probability is not equal to 500. Perform the below steps: Flip coin 500 times Calculate p-value. Compare the p-value against the alpha -> result of two-tailed test (0.05/2 = 0.025). Following two cases might occur: p-value > alpha: Then null hypothesis holds good and the coin is unbiased. p-value < alpha: Then the null hypothesis is rejected and the coin is biased.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0047",
+    "question": "What is the importance of dimensionality reduction?",
+    "answer": "The process of dimensionality reduction constitutes reducing the number of features in a dataset to avoid overfitting and reduce the variance. There are mostly 4 advantages of this process: This reduces the storage space and time for model execution. Removes the issue of multi-collinearity thereby improving the parameter interpretation of the ML model. Makes it easier for visualizing data when the dimensions are reduced. Avoids the curse of increased dimensionality.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0048",
+    "question": "How is the grid search parameter different from the random search tuning strategy?",
+    "answer": "Tuning strategies are used to find the right set of hyperparameters. Hyperparameters are those properties that are fixed and model-specific before the model is tested or trained on the dataset. Both the grid search and random search tuning strategies are optimization techniques to find efficient hyperparameters. \nGrid Search: \nHere, every combination of a preset list of hyperparameters is tried out and evaluated. \nThe search pattern is similar to searching in a grid where the values are in a matrix and a search is performed. Each parameter set is tried out and their accuracy is tracked. a er every combination is tried out, the model with the highest accuracy is chosen as the best one. \nThe main drawback here is that, if the number of hyperparameters is increased, the technique suffers. The number of evaluations can increase exponentially with each increase in the hyperparameter. This is called the problem of dimensionality in a grid search.\nRandom Search: \nIn this technique, random combinations of hyperparameters set are tried and evaluated for finding the best solution. For optimizing the search, the function is tested at random configurations in parameter space as shown in the image below. \nIn this method, there are increased chances of finding optimal parameters because the pattern followed is random. There are chances that the model is trained on optimized parameters without the need for aliasing. \nThis search works the best when there is a lower number of dimensions as it takes less time to find the right set.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0049",
+    "question": "What is marginal probability?",
+    "answer": "Marginal probability is the probability of a single event occurring independently, without considering the outcomes of other events. It focuses solely on the likelihood of one specific event happening, independent of any other events. Marginal probability is obtained by summing or integrating the joint probabilities of the event of interest across all possible outcomes of other events.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0050",
+    "question": "What are the probability axioms?",
+    "answer": "The fundamental rules that control the behaviour and characteristics of probabilities in probability theory and statistics are referred to as the probability axioms, sometimes known as the probability laws or probability principles.\nThere are three fundamental axioms of probability:\nNon-Negativity Axiom\nNormalization Axiom\nAdditivity Axiom",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0051",
+    "question": "What is conditional probability?",
+    "answer": "Conditional probability refers to the probability of an event occurring given that another event has already occurred. Mathematically, it is defined as the probability of event A occurring, given that event B has occurred, and is denoted by P(A∣B)P(A∣B) .\nThe formula for conditional probability is:\nP(A∣B)=P(A∩B)P(B)P(A∣B)=P(B)P(A∩B)\nwhere:\nP(A|B) is the conditional probability of event A given event B.\nP(A∩B)P(A∩B) is the joint probability of both events A and B occurring simultaneously.\nP(B)  is the probability of event B occurring.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0052",
+    "question": "What is Bayes’ Theorem and when is it used in data science?",
+    "answer": "The Bayes theorem predicts the probability that an event connected to any condition would occur. It is also taken into account in the situation of conditional probability. The probability of “causes” formula is another name for the Bayes theorem.\nIn data science, Bayes’ Theorem is used primarily in:\nBayesian Inference\nMachine Learning\nText Classification\nMedical Diagnosis\nPredictive Modeling\nWhen working with ambiguous or sparse data, Bayes’ Theorem is very helpful since it enables data scientists to continually revise their assumptions and come to more sensible conclusions.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0053",
+    "question": "Define variance and conditional variance.",
+    "answer": "A statistical concept known as variance quantifies the spread or dispersion of a group of data points within a dataset. It sheds light on how widely individual data points depart from the dataset’s mean (average). It assesses the variability or “scatter” of data.\nConditional Variance\nA measure of the dispersion or variability of a random variable under certain circumstances or in the presence of a particular event, as the name implies. It reflects a random variable’s variance that is dependent on the knowledge of another random variable’s variance.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0054",
+    "question": "Explain the concepts of mean, median, mode, and standard deviation.",
+    "answer": "Mean: The mean, often referred to as the average, is calculated by summing up all the values in a dataset and then dividing by the total number of values.\nMedian: When data are sorted in either ascending or descending order, the median is the value in the middle of the dataset. The median is the average of the two middle values when the number of data points is even.\nIn comparison to the mean, the median is less impacted by extreme numbers, making it a more reliable indicator of central tendency.\nMode: The value that appears most frequently in a dataset is the mode. One mode (unimodal), several modes (multimodal), or no mode (if all values occur with the same frequency) can all exist in a dataset.\nStandard deviation: The spread or dispersion of data points in a dataset is measured by the standard deviation. It quantifies the variance between different data points.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0055",
+    "question": "What is the normal distribution and standard normal distribution?",
+    "answer": "The normal distribution, also known as the Gaussian distribution or bell curve, is a continuous probability distribution that is characterized by its symmetric bell-shaped curve. The normal distribution is defined by two parameters: the mean (μ) and the standard deviation (σ). The mean determines the center of the distribution, and the standard deviation determines the spread or dispersion of the distribution. The distribution is symmetric around its mean, and the bell curve is centered at the mean. The probabilities for values that are further from the mean taper off equally in both directions. Similar rarity applies to extreme values in the two tails of the distribution. Not all symmetrical distributions are normal, even though the normal distribution is symmetrical.\nThe standard normal distribution, also known as the Z distribution, is a special case of the normal distribution where the mean (μ) is 0 and the standard deviation (σ) is 1. It is a standardized form of the normal distribution, allowing for easy comparison of scores or observations from different normal distributions.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0056",
+    "question": "What is SQL, and what does it stand for?",
+    "answer": "SQL stands for Structured Query Language.It is a specialized programming language used for managing and manipulating relational databases. It is designed for tasks related to database management, data retrieval, data manipulation, and data definition.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_0057",
+    "question": "Explain the differences between SQL and NoSQL databases.",
+    "answer": "Both SQL (Structured Query Language) and NoSQL (Not Only SQL) databases, differ in their data structures, schema, query languages, and use cases. The following are the main variations between SQL and NoSQL databases.\nSQL\tNoSQL\nSQL databases are relational databases, they organise and store data using a structured schema with tables, rows, and columns.\tNoSQL databases use a number of different types of data models, such as document-based (like JSON and BSON), key-value pairs, column families, and graphs.\nSQL databases have a set schema, thus before inserting data, we must establish the structure of our data.The schema may need to be changed, which might be a difficult process.\tNoSQL databases frequently employ a dynamic or schema-less approach, enabling you to insert data without first creating a predetermined schema.\nSQL is a strong and standardised query language that is used by SQL databases. Joins, aggregations, and subqueries are only a few of the complicated processes supported by SQL queries.\tThe query languages or APIs used by NoSQL databases are frequently tailored to the data model.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_0058",
+    "question": "What are the primary SQL database management systems (DBMS)?",
+    "answer": "Relational database systems, both open source and commercial, are the main SQL (Structured Query Language) database management systems (DBMS), which are widely used for managing and processing structured data. Some of the most popular SQL database management systems are listed below:\n•\tMySQL\n•\tMicrosoft SQL Server\n•\tSQLite\n•\tPostgreSQL\n•\tOracle Database\n•\tAmazon RDS",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_0059",
+    "question": "What is the ER model in SQL?",
+    "answer": "The structure and relationships between the data entities in a database are represented by the Entity-Relationship (ER) model, a conceptual framework used in database architecture. The ER model is frequently used in conjunction with SQL for creating the structure of relational databases even though it is not a component of the SQL language itself.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_0060",
+    "question": "What is data transformation?",
+    "answer": "The process of transforming data from one structure, format, or representation into another is referred to as data transformation. In order to make the data more suited for a given goal, such as analysis, visualisation, reporting, or storage, this procedure may involve a variety of actions and changes to the data. Data integration, cleansing, and analysis depend heavily on data transformation, which is a common stage in data preparation and processing pipelines.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0061",
+    "question": "What are the main components of a SQL query?",
+    "answer": "A relational database’s data can be retrieved, modified, or managed via a SQL (Structured Query Language) query. The operation of a SQL query is defined by a number of essential components, each of which serves a different function.\nSELECT\nFROM\nWHERE\nGROUP BY\nHAVING\nORDER BY\nLIMIT\nJOIN",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_0062",
+    "question": "What is a primary key?",
+    "answer": "A relational database table’s main key, also known as a primary keyword, is a column that is unique for each record. It is a distinctive identifier.The primary key of a relational database must be unique. Every row of data must have a primary key value and none of the rows can be null.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0063",
+    "question": "What is the purpose of the GROUP BY clause, and how is it used?",
+    "answer": "In SQL, the GROUP BY clause is used to create summary rows out of rows that have the same values in a set of specified columns. In order to do computations on groups of rows as opposed to individual rows, it is frequently used in conjunction with aggregate functions like SUM, COUNT, AVG, MAX, or MIN. we may produce summary reports and perform more in-depth data analysis using the GROUP BY clause.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0064",
+    "question": "What is the WHERE clause used for, and how is it used to filter data?",
+    "answer": "In SQL, the WHERE clause is used to filter rows from a table or result set according to predetermined criteria. It enables us to pick only the rows that satisfy particular requirements or follow a pattern. A key element of SQL queries, the WHERE clause is frequently used for data retrieval and manipulation.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0065",
+    "question": "How do you retrieve distinct values from a column in SQL?",
+    "answer": "Using the DISTINCT keyword in combination with the SELECT command, we can extract distinct values from a column in SQL. By filtering out duplicate values and returning only unique values from the specified column, the DISTINCT keyword is used.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_0066",
+    "question": "What is the HAVING clause?",
+    "answer": "To filter query results depending on the output of aggregation functions, the HAVING clause, a SQL clause, is used along with the GROUP BY clause. The HAVING clause filters groups of rows after they have been grouped by one or more columns, in contrast to the WHERE clause, which filters rows before they are grouped.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0067",
+    "question": "How do you handle missing or NULL values in a database table?",
+    "answer": "Missing or NULL values can arise due to various reasons, such as incomplete data entry, optional fields, or data extraction processes.\nReplace NULL with Placeholder Values\nHandle NULL Values in Queries\nUse Default Values",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_0068",
+    "question": "What is the difference between supervised and unsupervised machine learning?",
+    "answer": "The difference between Supervised Learning and Unsupervised Learning are as follow:\nCategory\tSupervised Learning\tUnsupervised Learning\nDefinition\tSupervised learning refers to that part of machine learning where we know what the target variable is and it is labeled.\tUnsupervised Learning is used when we do not have labeled data and we are not sure about our target variable\nObjective\tThe objective of supervised learning is to predict an outcome or classify the data\tThe objective here is to discover patterns among the features of the dataset and group similar features together\nAlgorithms\tSome of the algorithm types are:\nRegression (Linear, Logistic, etc.)\nClassification (Decision Tree Classifier, Support Vector Classifier, etc.)\tSome of the algorithms are :\nDimensionality reduction (Principle Component Analysis, etc.)\nClustering (KMeans, DBSCAN, etc.)\nEvaluation metrics\tSupervised learning uses evaluation metrics like:\nMean Squared Error\nAccuracy\tUnsupervised Learning uses evaluation metrics like:\nSilhouette\nInertia\nUse cases\tPredictive modeling, Spam detection\tAnomaly detection, Customer segmentation",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0069",
+    "question": "What is linear regression, and What are the different assumptions of linear regression algorithms?",
+    "answer": "Linear Regression – It is type of Supervised Learning where we compute a linear relationship between the predictor and response variable. It is based on the linear equation concept given by:\ny^=β1x+βoy^=β1x+βo,\nwhere\ny^y^ = response / dependent variable\nβ1β1 = slope of the linear regression\nβoβo = intercept for linear regression\nxx = predictor / independent variable(s)\nThere are 4 assumptions we make about a Linear regression problem:\nLinear relationship : This assumes that there is a linear relationship between predictor and response variable. This means that, which changing values of predictor variable, the response variable changes linearly (either increases or decreases).\nNormality : This assumes that the dataset is normally distributed, i.e., the data is symmetric about the mean of the dataset.\nIndependence : The features are independent of each other, there is no correlation among the features/predictor variables of the dataset.\nHomoscedasticity : This assumes that the dataset has equal variance for all the predictor variables. This means that the amount of independent variables have no effect on the variance of data.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0070",
+    "question": "Logistic regression is a classification technique, why its name is regressions, not logistic classifications?",
+    "answer": "While logistic regression is used for classification, it still maintains a regression structure underneath. The key idea is to model the probability of an event occurring (e.g., class 1 in binary classification) using a linear combination of features, and then apply a logistic (Sigmoid) function to transform this linear combination into a probability between 0 and 1. This transformation is what makes it suitable for classification tasks.\nIn essence, while logistic regression is indeed used for classification, it retains the mathematical and structural characteristics of a regression model, hence the name.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0071",
+    "question": "What is the logistic function (sigmoid function) in logistic regression?",
+    "answer": "Sigmoid Function: It is a mathematical function which is characterized by its S- shape curve. Sigmoid functions have the tendency to squash a data point to lie within 0 and 1. This is why it is also called Squashing function, which is given as:\n \n \nSome of the properties of Sigmoid function is:\n \nRange: [0,1]",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0072",
+    "question": "What is overfitting and how can be overcome this?",
+    "answer": "Overfitting refers to the result of analysis of a dataset which fits so closely with training data that it fails to generalize with unseen/future data. This happens when the model is trained with noisy data which causes it to learn the noisy features from the training as well.\nTo avoid Overfitting and overcome this problem in machine learning, one can follow the following rules:\nFeature selection : Sometimes the training data has too many features which might not be necessary for our problem statement. In that case, we use only the necessary features that serve our purpose\nCross Validation : This technique is a very powerful method to overcome overfitting. In this, the training dataset is divided into a set of mini training batches, which are used to tune the model.\nRegularization : Regularization is the technique to supplement the loss with a penalty term so as to reduce overfitting. This penalty term regulates the overall loss function, thus creating a well trained model.\nEnsemble models : These models learn the features and combine the results from different training models into a single prediction.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0073",
+    "question": "What is a support vector machine (SVM), and what are its key components?",
+    "answer": "Support Vector machines are a type of Supervised algorithm which can be used for both Regression and Classification problems. In SVMs, the main goal is to find a hyperplane which will be used to segregate different data points into classes. Any new data point will be classified based on this defined hyperplane.\nSupport Vector machines are highly effective when dealing with high dimensionality space and can handle non linear data very well. But if the number of features are greater than number of data samples, it is susceptible to overfitting.\nThe key components of SVM are:\nKernels Function: It is a mapping function used for data points to convert it into high dimensionality feature space.\nHyperplane: It is the decision boundary which is used to differentiate between the classes of data points.\nMargin: It is the distance between Support Vector and Hyperplane\nC: It is a regularization parameter which is used for margin maximization and misclassification minimization.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0074",
+    "question": "Explain the k-nearest neighbors (KNN) algorithm.",
+    "answer": "The k-Nearest Neighbors (KNN) algorithm is a simple and versatile supervised machine learning algorithm used for both classification and regression tasks. KNN makes predictions by memorizing the data points rather than building a model about it. This is why it is also called “lazy learner” or “memory based” model too.\nKNN relies on the principle that similar data points tend to belong to the same class or have similar target values. This means that, In the training phase, KNN stores the entire dataset consisting of feature vectors and their corresponding class labels (for classification) or target values (for regression). It then calculates the distances between that point and all the points in the training dataset. (commonly used distance metrics are Euclidean distance and Manhattan distance).\n(Note : Choosing an appropriate value for k is crucial. A small k may result in noisy predictions, while a large k can smooth out the decision boundaries. The choice of distance metric and feature scaling also impact KNN’s performance.)",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0075",
+    "question": "What is the Naïve Bayes algorithm, what are the different assumptions of Naïve Bayes?",
+    "answer": "The Naïve Bayes algorithm is a probabilistic classification algorithm based on Bayes’ theorem with a “naïve” assumption of feature independence within each class. It is commonly used for both binary and multi-class classification tasks, particularly in situations where simplicity, speed, and efficiency are essential.\nThe main assumptions that Naïve Bayes theorem makes are:\nFeature independence – It assumes that the features involved in Naïve Bayes algorithm are conditionally independent, i.e., the presence/ absence of one feature does not affect any other feature\nEquality – This assumes that the features are equal in terms of importance (or weight).\nNormality – It assumes that the feature distribution is Normal in nature, i.e., the data is distributed equally around its mean.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0076",
+    "question": "What are decision trees, and how do they work?",
+    "answer": "Decision trees are a popular machine learning algorithm used for both classification and regression tasks. They work by creating a tree-like structure of decisions based on input features to make predictions or decisions. Lets dive into its core concepts and how they work briefly:\nDecision trees consist of nodes and edges.\nThe tree starts with a root node and branches into internal nodes that represent features or attributes.\nThese nodes contain decision rules that split the data into subsets.\nEdges connect nodes and indicate the possible decisions or outcomes.\nLeaf nodes represent the final predictions or decisions.\n \nThe objective is to increase data homogeneity, which is often measured using standards like mean squared error (for regression) or Gini impurity (for classification). Decision trees can handle a variety of attributes and can effectively capture complex data relationships. They can, however, overfit, especially when deep or complex. To reduce overfitting, strategies like pruning and restricting tree depth are applied.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0077",
+    "question": "Explain the concepts of entropy and information gain in decision trees.",
+    "answer": "Entropy: Entropy is the measure of randomness. In terms of Machine learning, Entropy can be defined as the measure of randomness or impurity in our dataset. It is given as:\n , where\n  = probability of an event “i”.\nInformation gain: It is defined as the change in the entropy of a feature given that there’s an additional information about that feature. If there are more than one features involved in Decision tree split, then the weighted average of entropies of the additional features is taken.\nInformation gain =  , where\nE = Entropy",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0078",
+    "question": "What is the difference between the bagging and boosting model?",
+    "answer": "Category\tBagging Model\tBoosting model\nDefinition\tBagging, or Bootstrap aggregating, is an ensemble modelling method where predictions from different models are combined together to give the aggregated result\tBoosting method is where multiple weak learners are used together to get a stronger model with more robust predictions.\nAgenda\tThis is used when dealing with models that have high variance (overfitting).\tThis is used when dealing with models with high bias (underfitting) and variance as well.\nRobustness to Noise and Sensitivity\tThis is more robust due to averaging and this makes it less sensitive\tIt is more sensitive to presence of outliers and that makes it a bit less robust as compared to bagging models\nModel running and dependence\tThe models are run in parallel and are typically independent\tThe models are run in sequential method where the base model is dependent.\nExamples\tRandom Forest, Bagged Decision Trees\tAdaBoost, Gradient Boosting, XGBoost",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0079",
+    "question": "Describe random forests and their advantages over single-decision trees.",
+    "answer": "Random Forests are an ensemble learning technique that combines multiple decision trees to improve predictive accuracy and reduce overfitting. The advantages it has over single decision trees are:\nImproved Generalization: Single decision trees are prone to overfitting, especially when they become deep and complex. Random Forests mitigate this issue by averaging predictions from multiple trees, resulting in a more generalized model that performs better on unseen data\nBetter Handling of High-Dimensional Data : Random Forests are effective at handling datasets with a large number of features. They select a random subset of features for each tree, which can improve the performance when there are many irrelevant or noisy features\nRobustness to Outliers: Random Forests are more robust to outliers because they combine predictions from multiple trees, which can better handle extreme cases",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0080",
+    "question": "What is K-Means, and how will it work?",
+    "answer": "K-Means is an unsupervised machine learning algorithm used for clustering or grouping similar data points together. It aims to partition a dataset into K clusters, where each cluster represents a group of data points that are close to each other in terms of some similarity measure. The working of K-means is as follow:\nChoose the number of clusters K\nFor each data point in the dataset, calculate its distance to each of the K centroids and then assign each data point to the cluster whose centroid is closest to it\nRecalculate the centroids of the K clusters based on the current assignment of data points.\nRepeat the above steps until a group of clusters are formed.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0081",
+    "question": "What is a confusion matrix? Explain with an example.",
+    "answer": "Confusion matrix is a table used to evaluate the performance of a classification model by presenting a comprehensive view of the model’s predictions compared to the actual class labels. It provides valuable information for assessing the model’s accuracy, precision, recall, and other performance metrics in a binary or multi-class classification problem.\nA famous example demonstration would be Cancer Confusion matrix:\n\tActual\n\tCancer\tNot Cancer\n\nPredicted\n\tCancer\tTrue Positive (TP)\tFalse Positive (FP)\n\tNot Cancer\tFalse Negative (FN)\tTrue Negative (TN)\nTP (True Positive) = The number of instances correctly predicted as the positive class\nTN (True Negative) = The number of instances correctly predicted as the negative class\nFP (False Positive) = The number of instances incorrectly predicted as the positive class\nFN (False Negative) = The number of instances incorrectly predicted as the negative class",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0082",
+    "question": "What is a classification report and explain the parameters used to interpret the result of classification tasks with an example.",
+    "answer": "A classification report is a summary of the performance of a classification model, providing various metrics that help assess the quality of the model’s predictions on a classification task.\nThe parameters used in a classification report typically include:\nPrecision: Precision is the ratio of true positive predictions to the total predicted positives. It measures the accuracy of positive predictions made by the model.\nPrecision = TP/(TP+FP)\n\nRecall (Sensitivity or True Positive Rate): Recall is the ratio of true positive predictions to the total actual positives. It measures the model’s ability to identify all positive instances correctly.\nRecall = TP / (TP + FN)\n\nAccuracy: Accuracy is the ratio of correctly predicted instances (both true positives and true negatives) to the total number of instances. It measures the overall correctness of the model’s predictions.\nAccuracy = (TP + TN) / (TP + TN + FP + FN)\n\nF1-Score: The F1-Score is the harmonic mean of precision and recall. It provides a balanced measure of both precision and recall and is particularly useful when dealing with imbalanced datasets.\nF1-Score = 2 * (Precision * Recall) / (Precision + Recall)\n\nwhere,\nTP = True Positive\nTN = True Negative\nFP = False Positive\nFN = False Negative\nIntermediate Data Science Interview Questions",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0083",
+    "question": "Explain the uniform distribution.",
+    "answer": "A fundamental probability distribution in statistics is the uniform distribution, commonly referred to as the rectangle distribution. A constant probability density function (PDF) across a limited range characterises it. In simpler terms, in a uniform distribution, every value within a specified range has an equal chance of occurring.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0084",
+    "question": "Describe the Bernoulli distribution.",
+    "answer": "A discrete probability distribution, the Bernoulli distribution is focused on discrete random variables. The number of heads you obtain while tossing three coins at once or the number of pupils in a class are examples of discrete random variables that have a finite or countable number of potential values.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0085",
+    "question": "What is the binomial distribution?",
+    "answer": "The binomial distribution is a discrete probability distribution that describes the number of successes in a fixed number of independent Bernoulli trials, where each trial has only two possible outcomes: success or failure. The outcomes are often referred to as “success” and “failure,” but they can represent any dichotomous outcome, such as heads or tails, yes or no, or defective or non-defective.\nThe fundamental presumptions of a binomial distribution are that each trial has exactly one possible outcome, each trial has an equal chance of success, and each trial is either independent of the others or mutually exclusive.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0086",
+    "question": "Explain the exponential distribution and where it’s commonly used.",
+    "answer": "The probability distribution of the amount of time between events in the Poisson point process is known as the exponential distribution. The gamma distribution is thought of as a particular instance of the exponential distribution. Additionally, the geometric distribution’s continuous analogue is the exponential distribution.\nCommon applications of the exponential distribution include:\nReliability Engineering\nQueueing Theory\nTelecommunications\nFinance\nNatural Phenomena\nSurvival Analysis",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0087",
+    "question": "Describe the Poisson distribution and its characteristics.",
+    "answer": "The Poisson distribution is a probability distribution that describes the number of events that occur within a fixed interval of time or space when the events happen at a constant mean rate and are independent of the time since the last event.\nKey characteristics of the Poisson distribution include:\nDiscreteness: The Poisson distribution is used to model the number of discrete events that occur within a fixed interval.\nConstant Mean Rate: The events occur at a constant mean rate per unit of time or space.\nIndependence: The occurrences of events are assumed to be independent of each other. The probability of multiple events occurring in a given interval is calculated based on the assumption of independence.\nQ40. Explain the t-distribution and its relationship with the normal distribution.\nThe t-distribution, also known as the Student’s t-distribution, is used in statistics for inferences about population means when the sample size is small and the population standard deviation is unknown. The shape of the t-distribution is similar to the normal distribution, but it has heavier tails.\nRelationship between T-Distribution and Normal Distribution: The t-distribution converges to the normal distribution as the degrees of freedom increase. In fact, when the degrees of freedom become very large, the t-distribution approaches the standard normal distribution (normal distribution with mean 0 and standard deviation 1). This is a result of the Central Limit Theorem.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0088",
+    "question": "Describe the chi-squared distribution.",
+    "answer": "The chi-squared distribution is a continuous probability distribution that arises in statistics and probability theory. It is commonly denoted as χ2 (chi-squared) and is associated with degrees of freedom. The chi-squared distribution is particularly used to model the distribution of the sum of squared independent standard normal random variables.It is also used to determine if data series are independent, the goodness of fit of a data distribution, and the level of confidence in the variance and standard deviation of a random variable with a normal distribution.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0089",
+    "question": "What is the difference between z-test, F-test, and t-test?",
+    "answer": "The z-test, t-test, and F-test are all statistical hypothesis tests used in different situations and for different purposes. Here’s a overview of each test and the key differences between them.\nz-test\tt-test\tF-test\nWhen we want to compare a sample mean to a known population mean and we know the population standard deviation, we use the z-test.\tWhen we want to compare a sample mean to a known or assumed population mean but don’t know what the population standard deviation is we use the t-test.\tThe F-test is used to compare the variances of two or more samples. It is commonly used in analysis of variance (ANOVA) and regression analysis.\nWhen we dealing with large sample sizes or when we known the population standard deviation it is most frequently used.\tThe t-test follows a t-distribution, which has different shapes depending on the degrees of freedom.\tThe two-sample F-test, which analyses the variances of two independent samples, is the most popular of the F-test’s variants.\nThe z-test follows a standard normal distribution when certain assumptions are met.\tThe sample standard deviation (s) determines the test statistic for the t-test.\tOne set of degrees of freedom corresponds to each sample’s degrees of freedom in the F-distribution.\nIn summary, the choice between a z-test, t-test, or F-test depends on the specific research question and the characteristics of the data.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0090",
+    "question": "What is the central limit theorem, and why is it significant in statistics?",
+    "answer": "The Central Limit Theorem states that, regardless of the shape of the population distribution, the distribution of the sample means approaches a normal distribution as the sample size increases.This is true even if the population distribution is not normal. The larger the sample size, the closer the sampling distribution of the sample mean will be to a normal distribution.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0091",
+    "question": "Describe the process of hypothesis testing, including null and alternative hypotheses.",
+    "answer": "Hypothesis testing is a statistical method used to make inferences about population parameters based on sample data.It is a systematic way of evaluating statements or hypotheses about a population using observed sample data.To identify which statement is best supported by the sample data, it compares two statements about a population that are mutually exclusive.\nNull hypothesis(H0): The null hypothesis (H0) in statistics is the default assumption or assertion that there is no association between any two measured cases or any two groups. In other words, it is a fundamental assumption or one that is founded on knowledge of the problem.\nAlternative hypothesis(H1): The alternative hypothesis, or H1, is the null-hypothesis-rejecting hypothesis that is utilised in hypothesis testing.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0092",
+    "question": "How do you calculate a confidence interval, and what does it represent?",
+    "answer": "A confidence interval (CI) is a statistical range or interval estimate for a population parameter, such as the population mean or population proportion, based on sample data. to calculate confidence interval these are the following steps.\nCollect Sample Data\nChoose a Confidence Level\nSelect the Appropriate Statistical Method\nCalculate the Margin of Error (MOE)\nCalculate the Confidence Interval\nInterpret the Confidence Interval\nConfidence interval represents a range of values within which we believe, with a specified level of confidence (e.g., 95%), that the true population parameter lies.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0093",
+    "question": "What is a p-value in Statistics?",
+    "answer": "The term “p-value,” which stands for “probability value,” is a key one in statistics and hypothesis testing. It measures the evidence contradicting a null hypothesis and aids in determining whether a statistical test’s findings are statistically significant. Here is a definition of a p-value and how it is used in hypothesis testing.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0094",
+    "question": "Explain Type I and Type II errors in hypothesis testing.",
+    "answer": "Rejecting a null hypothesis that is actually true in the population results in a type I error (false-positive); failing to reject a null hypothesis that is actually untrue in the population results in a type II error (false-negative).\ntype I and type II mistakes cannot be completely avoided, the investigator can lessen their risk by increasing the sample size (the less likely it is that the sample will significantly differ from the population).",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0095",
+    "question": "What is the significance level (alpha) in hypothesis testing?",
+    "answer": "A crucial metric in hypothesis testing that establishes the bar for judging whether the outcomes of a statistical test are statistically significant is the significance level, which is sometimes indicated as (alpha). It reflects the greatest possible chance of committing a Type I error, or mistakenly rejecting a valid null hypothesis.\nThe significance level in hypothesis testing.\nSetting the Significance Level\nInterpreting the Significance Level\nHypothesis Testing Using Significance Level\nChoice of Significance Level",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0096",
+    "question": "How can you calculate the correlation coefficient between two variables?",
+    "answer": "The degree and direction of the linear link between two variables are quantified by the correlation coefficient. The Pearson correlation coefficient is the most widely used method for determining the correlation coefficient. The Pearson correlation coefficient can be calculated as follows.\nCollect Data\nCalculate the Means\nCalculate the Covariance\nCalculate the Standard Deviations\nCalculate the Pearson Correlation Coefficient (r)\nInterpret the Correlation Coefficient.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0097",
+    "question": "What is covariance, and how is it related to correlation?",
+    "answer": "Both covariance and correlation are statistical metrics that show how two variables are related to one another.However, they serve slightly different purposes and have different interpretations.\nCovariance :Covariance measures the degree to which two variables change together. It expresses how much the values of one variable tend to rise or fall in relation to changes in the other variable.\nCorrelation : A standardised method for measuring the strength and direction of a linear relationship between two variables is correlation. It multiplies the standard deviations of the two variables to scale the covariance.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_0098",
+    "question": "Explain how to perform a hypothesis test for comparing two population means.",
+    "answer": "When comparing two population means, a hypothesis test is used to determine whether there is sufficient statistical support to claim that the means of the two distinct populations differ significantly. Tests we can commonly use for include “paired t-test” or “two -sample t test”. The general procedures for carrying out such a test are as follows.\nFormulate Hypotheses\nChoose the Significance Level\nCollect Data\nDefine Test Statistic\nDraw a Conclusion\nFinal Results",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_0099",
+    "question": "Explain the concept of normalization in database design.",
+    "answer": "By minimising data duplication and enhancing data integrity, normalisation is a method in database architecture that aids in the effective organisation of data. It include dividing a big, complicated table into smaller, associated tables while making sure that connections between data elements are preserved. The basic objective of normalisation is to reduce data anomalies, which can happen when data is stored in an unorganised way and include insertion, update, and deletion anomalies.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00100",
+    "question": "What is database normalization?",
+    "answer": "Database denormalization is the process of intentionally introducing redundancy into a relational database by merging tables or incorporating redundant data to enhance query performance. Unlike normalization, which minimizes data redundancy for consistency, denormalization prioritizes query speed. By reducing the number of joins required, denormalization can improve read performance for complex queries. However, it may lead to data inconsistencies and increased maintenance complexity. Denormalization is often employed in scenarios where read-intensive operations outweigh the importance of maintaining a fully normalized database structure. Careful consideration and trade-offs are essential to strike a balance between performance and data integrity.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00101",
+    "question": "Define different types of SQL functions.",
+    "answer": "SQL functions can be categorized into several types based on their functionality.\nScalar Functions\nAggregate Functions\nWindow Functions\nTable-Valued Functions\nSystem Functions\nUser-Defined Functions\nConversion Functions\nConditional Functions",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00102",
+    "question": "Explain the difference between INNER JOIN and LEFT JOIN.",
+    "answer": "INNER JOIN and LEFT JOIN are two types of SQL JOIN operations used to combine data from multiple tables in a relational database. Here are the some main differences between them.\nINNER JOIN\tLEFT JOIN\nOnly rows with a match in the designated columns between the two tables being connected are returned by an INNER JOIN.\tLEFT JOIN returns all rows from the left table and the matching rows from the right table.\nA row is not included in the result set if there is no match for it in either of the tables.\tColumns from the right table’s rows are returned with NULL values if there is no match for that row.\nWhen we want to retrieve data from both tables depending on a specific criterion, INNER JOIN can be helpful.\tIt makes sure that every row from the left table appears in the final product, even if there are no matches for that row in the right table.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00103",
+    "question": "What is a subquery, and how can it be used in SQL?",
+    "answer": "A subquery is a query that is nested within another SQL query, also referred to as an inner query or nested query. On the basis of the outcomes of another query, we can use it to get data from one or more tables. SQL’s subqueries capability is employed for a variety of tasks, including data retrieval, computations, and filtering.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00104",
+    "question": "How do you perform mathematical calculations in SQL queries?",
+    "answer": "In SQL, we can perform mathematical calculations in queries using arithmetic operators and functions. Here are some common methods for performing mathematical calculations.\nArithmetic Operators\nMathematical Functions\nAggregate Functions\nCustom Expressions",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00105",
+    "question": "What is the purpose of the CASE statement in SQL?",
+    "answer": "The SQL CASE statement is a flexible conditional expression that may be used to implement conditional logic inside of a query. we can specify various actions or values based on predetermined criteria.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00106",
+    "question": "What is the difference between a database and a data warehouse?",
+    "answer": "Database: Consistency and real-time data processing are prioritised, and they are optimised for storing, retrieving, and managing structured data. Databases are frequently used for administrative functions like order processing, inventory control, and customer interactions.\nData Warehouse: Data warehouses are made for processing analytical data. They are designed to facilitate sophisticated querying and reporting by storing and processing massive amounts of historical data from various sources. Business intelligence, data analysis, and decision-making all employ data warehouses.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00107",
+    "question": "What is regularization in machine learning, State the differences between L1 and L2 regularization",
+    "answer": "Regularization: Regularization is the technique to restrict the model overfitting during training by inducing a penalty to the loss. The penalty imposed on the loss function is added so that the complexity of the model can be controlled, thus overcoming the issue of overfitting in the model.\nThe following are the differences between L1 and L2 regularization:\ncategory\tL1 Regularization(Lasso)\tL2 Regularization (Ridge)\nDefinition\tL1 regularization is the technique where the induced penalty term changes some of the terms to be exactly zero\tL2 regularization is the technique where the induced penalty term changes some of the terms to be as near to zero as possible.\nInterpretability\tSelects a subset of most important ones while eliminating less important ones.\tSelects all the features but assigns less weights to less important features.\nFormula\t \nwhere,\nL1 = Lasso Loss function\n  = Model loss\n  = regularization controlling parameter\nw = weights of the model\t \nwhere,\nL2 = Ridge Loss function\n  = Model loss\n  = regularization controlling parameter\nw = weights of the model\nRobustness\tSensitive to outliers and noisy data as it can eliminate them\tMore robust to the presence of Outliers and noisy data\nComputational efficiency\tComputationally more expensive\tComputationally less expensive.\nQ.61 Explain the concepts of bias-variance trade-off in machine learning.\nWhen creating predictive models, the bias-variance trade-off is a key concept in machine learning that deals with finding the right balance between two sources of error, bias and variance. It plays a crucial role in model selection and understanding the generalization performance of a machine learning algorithm. Here’s an explanation of these concepts:\nBias: Bias is simply described as the model’s inability to forecast the real value due of some difference or inaccuracy. These differences between actual or expected values and the predicted values are known as error or bias error or error due to bias.\nVariance: Variance is a measure of data dispersion from its mean location. In machine learning, variance is the amount by which a predictive model’s performance differs when trained on different subsets of the training data. More specifically, variance is the model’s variability in terms of how sensitive it is to another subset of the training dataset, i.e. how much it can adapt on the new subset of the training dataset.\n\tLow Bias\tHigh Bias\nLow Variance\tBest fit (Ideal Scenario )\tUnderfitting\nHigh Variance\tOverfitting\tNot capture the underlying patterns\n(Worst Case)\nAs a Data Science Professional, Our focus should be to achieve the the best fit model i.e Low Bias and Low Variance. A model with low bias and low variance suggests that it can capture the underlying patterns in the data (low bias) and is not overly sensitive to changes in the training data (low variance). This is the perfect circumstance for a machine learning model, since it can generalize effectively to new, previously unknown data and deliver consistent and accurate predictions. However, in practice, this is not achievable.\n \nIf the algorithm is too simplified (hypothesis with linear equation), it may be subject to high bias and low variance, making it error-prone. If algorithms fit too complicated a hypothesis (hypothesis with a high degree equation), it may have a large variance and a low bias. In the latter case, the new entries will underperform. There is, however, something in between these two situations called as a Trade-off or Bias Variance Trade-off. So, that An algorithm can’t be more complex and less complex at the same time.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00108",
+    "question": "How do we choose the appropriate kernel function in SVM?",
+    "answer": "A kernel function is responsible for converting the original data points into a high dimensionality feature space. Choosing the appropriate kernel function in a Support Vector Machine is a crucial step, as it determines how well the SVM can capture the underlying patterns in your data. Below mentioned are some of the ways to choose the suitable kernel function:\nIf the dataset exhibits linear relationship\nIn this case, we should use Linear Kernel function. It is simple, computationally efficient and less prone to overfitting. For example, text classification, sentiment analysis, etc.\nIf the dataset requires probabilistic approach\nThe sigmoid kernel is suitable when the data resembles a sigmoid function or when you have prior knowledge suggesting this shape. For example, Risk assessment, Financial applications, etc.\nIf the dataset is Simple Non Linear in nature\nIn this case, use a Polynomial Kernel Function. Polynomial functions are useful when we are trying to capture moderate level of non linearity. For example, Image and Speech Recognition, etc.\nIf the dataset is Highly Non-Linear in Nature/ we do not know about the underlying relationship\nIn that case, a Radial basis function is the best choice. RBF kernel can handle highly complex dataset and is useful when you’re unsure about the data’s underlying distribution. For example, Financial forecasting, bioinformatics, etc.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00109",
+    "question": "How does Naïve Bayes handle categorical and continuous features?",
+    "answer": "Naive Bayes is probabilistic approach which assumes that the features are independent of each other. It calculates probabilities associated with each class label based on the observed frequencies of feature values within each class in the training data. This is done by finding the conditional probability of Feature given a class. (i.e., P(feature | class)). To make predictions on categorical data, Naive Bayes calculates the posterior probability of each class given the observed feature values and selects the class with the highest probability as the predicted class label. This is called as “maximum likelihood” estimation.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00110",
+    "question": "What is Laplace smoothing (add-one smoothing) and why is it used in Naïve Bayes?",
+    "answer": "In Naïve Bayes, the conditional probability of an event given a class label is determined as P(event| class). When using this in a classification problem (let’s say a text classification), there could a word which did not appear in the particular class. In those cases, the probability of feature given a class label will be zero. This could create a big problem when getting predictions out of the training data.\nTo overcome this problem, we use Laplace smoothing. Laplace smoothing addresses the zero probability problem by adding a small constant (usually 1) to the count of each feature in each class and to the total count of features in each class. Without smoothing, if any feature is missing in a class, the probability of that class given the features becomes zero, making the classifier overly confident and potentially leading to incorrect classifications",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00111",
+    "question": "What are imbalanced datasets and how can we handle them?",
+    "answer": "Imbalanced datasets are datasets in which the distribution of class labels (or target values) is heavily skewed, meaning that one class has significantly more instances than any other class. Imbalanced datasets pose challenges because models trained on such data can have a bias toward the majority class, leading to poor performance on the minority class, which is often of greater interest. This will lead to the model not generalizing well on the unseen data.\nTo handle imbalanced datasets, we can approach the following methods:\nResampling (Method of either increasing or decreasing the number of samples):\nUp-sampling: In this case, we can increase the classes for minority by either sampling without replacement or generating synthetic examples. Some of the popular examples are SMOTE (Synthetic Minority Over-sampling Technique), etc.\nDown-sampling: Another case would be to randomly cut down the majority class such that it is comparable to minority class.\nEnsemble methods (using models which are capable of handling imbalanced dataset inherently:\nBagging : Techniques like Random Forests, which can mitigate the impact of class imbalance by constructing multiple decision trees from bootstrapped samples\nBoosting: Algorithms like AdaBoost and XGBoost can give more importance to misclassified minority class examples in each iteration, improving their representation in the final model",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00112",
+    "question": "What are outliers in the dataset and how can we detect and remove them?",
+    "answer": "An Outlier is a data point that is significantly different from other data points. Usually, Outliers are present in the extremes of the distribution and stand out as compared to their out data point counterparts.\nFor detecting Outliers we can use the following approaches:\nVisual inspection: This is the easiest way which involves plotting the data points into scatter plot/box plot, etc.\nstatistics: By using measure of central tendency, we can determine if a data point falls significantly far from its mean, median, etc. making it a potential outlier.\nZ-score: if a data point has very high Z-score, it can be identified as Outlier\nFor removing the outliers, we can use the following:\nRemoval of outliers manually\nDoing transformations like applying logarithmic transformation or square rooting the outlier\nPerforming imputations wherein the outliers are replaced with different values like mean, median, mode, etc.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00113",
+    "question": "What is the curse of dimensionality And How can we overcome this?",
+    "answer": "When dealing with a dataset that has high dimensionality (high number of features), we are often encountered with various issues and problems. Some of the issues faced while dealing with dimensionality dataset are listed below:\nComputational expense: The biggest problem with handling a dataset with vast number of features is that it takes a long time to process and train the model on it. This can lead to wastage of both time and monetary resources.\nData sparsity: Many times data points are far from each other (high sparsity). This makes it harder to find the underlying patterns between features and can be a hinderance in proper analysis\nVisualising issues and overfitting: It is rather easy to visualize 2d and 3d data. But beyond this order, it is difficult to properly visualize our data. Furthermore, more data features can be correlated and provide misleading information to the model training and cause overfitting.\nThese issues are what are generally termed as “Curse of Dimensionality”.\nTo overcome this, we can follow different approaches – some of which are mentioned below:\nFeature Selection: Many a times, not all the features are necessary. It is the user’s job to select out the features that would be necessary in solving a given problem statement.\nFeature engineering: Sometimes, we may need a feature that is the combination of many other features. This method can, in general, reduces the features count in the dataset.\nDimensionality Reduction techniques: These techniques reduce the number of features in a dataset while preserving as much useful information as possible. Some of the famous Dimensionality reduction techniques are: Principle component analysis (PCA), t-Distributed Stochastic Neighbor Embedding (t-SNE), etc.\nRegularization: Some regularization techniques like L1 and L2 regularizations are useful when deciding the impact each feature has on the model training.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00114",
+    "question": "How does the random forest algorithm handle feature selection?",
+    "answer": "Mentioned below is how Random forest handles feature selection\nWhen creating individual trees in the Random Forest ensemble, a subset of features is assigned to each tree which is called Feature Bagging. Feature Bagging introduces randomness and diversity among the trees.\nAfter the training, the features are assigned a “importance score” based on how well those features performed by reducing the error of the model. Features that consistently contribute to improving the model’s accuracy across multiple trees are deemed more important\nThen the features are ranked based on their importance scores. Features with higher importance scores are considered more influential in making predictions.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00115",
+    "question": "What is feature engineering? Explain the different feature engineering methods.",
+    "answer": "Feature Engineering: It can be defined as a method of preprocessing of data for better analysis purpose which involves different steps like selection, transformation, deletion of features to suit our problem at hand. Feature Engineering is a useful tool which can be used for:\nImproving the model’s performance and Data interpretability\nReduce computational costs\nInclude hidden patterns for elevated Analysis results.\nSome of the different methods of doing feature engineering are mentioned below:\nPrinciple Component Analysis (PCA) : It identifies orthogonal axes (principal components) in the data that capture the maximum variance, thereby reducing the data features.\nEncoding – It is a technique of converting the data to be represented a numbers with some meaning behind it. It can be done in two ways :\nOne-Hot Encoding – When we need to encode Nominal Categorical Data\nLabel Encoding – When we need to encode Ordinal Categorical Data\nFeature Transformation: Sometimes, we can create new columns essential for better modelling just by combining or modifying one or more columns.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00116",
+    "question": "How we will deal with the categorical text values in machine learning?",
+    "answer": "Often times, we are encountered with data that has Categorical text values. For example, male/female, first-class/second-class/third-class, etc. These Categorical text values can be divided into two types and based on that we deal with them as follows:\nIf it is Categorical Nominal Data: If the data does not have any hidden order associated with it (e.g., male/female), we perform One-Hot encoding on the data to convert it into binary sequence of digits\nIf it is Categorical Ordinal Data : When there is a pattern associated with the text data, we use Label encoding. In this, the numerical conversion is done based on the order of the text data. (e.g., Elementary/ Middle/ High/ Graduate,etc.)",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00117",
+    "question": "What is DBSCAN and How we will use it?",
+    "answer": "Density-Based Spatial Clustering of Applications with Noise (DBSCAN), is a density-based clustering algorithm used for grouping together data points that are close to each other in high-density regions and labeling data points in low-density regions as outliers or noise. Here is how it works:\nFor each data point in the dataset, DBSCAN calculates the distance between that point and all other data points\nDBSCAN identifies dense regions by connecting core points that are within each other’s predefined threshold (eps) neighborhood.\nDBSCAN forms clusters by grouping together data points that are density-reachable from one another.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00118",
+    "question": "How does the EM (Expectation-Maximization) algorithm work in clustering?",
+    "answer": "The Expectation-Maximization (EM) algorithm is a probabilistic approach used for clustering data when dealing with mixture models. EM is commonly used when the true cluster assignments are not known and when there is uncertainty about which cluster a data point belongs to. Here is how it works:\nFirst, the number of clusters K to be formed is specified.\nThen, for each data point, the likelihood of it belonging to each of the K clusters is calculated. This is called the Expectation (E) step\nBased on the previous step, the model parameters are updated. This is called Maximization (M) step.\nTogether it is used to check for convergence by comparing the change in log-likelihood or the parameter values between iterations.\nIf it converges, then we have achieved our purpose. If not, then the E-step and M-step are repeated until we reach convergence.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00119",
+    "question": "Explain the concept of silhouette score in clustering evaluation.",
+    "answer": "Silhouette score is a metric used to evaluate the quality of clusters produced by a clustering algorithm. Here is how it works:\nthe average distance between the data point and all other data points in the same cluster is first calculated. Let us call this as (a)\nThen for the same data point, the average distance (b) between the data point and all data points in the nearest neighboring cluster (i.e., the cluster to which it is not assigned)\nsilhouette coefficient for each data point is calculated, which given by: S = (b – a) / max(a, b)\nif -1<S<0, it signifies that data point is closer to a neighboring cluster than to its own cluster.\nif S is close to zero, data point is on or very close to the decision boundary between two neighboring clusters.\nif 0<S<1, data point is well within its own cluster and far from neighboring clusters.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00120",
+    "question": "What is the relationship between eigenvalues and eigenvectors in PCA?",
+    "answer": "In Principal Component Analysis (PCA), eigenvalues and eigenvectors play a crucial role in the transformation of the original data into a new coordinate system. Let us first define the essential terms:\nEigen Values: Eigenvalues are associated with each eigenvector and represent the magnitude of the variance (spread or extent) of the data along the corresponding eigenvector\nEigen Vectors: Eigenvectors are the directions or axes in the original feature space along which the data varies the most or exhibits the most variance\nThe relationship between them is given as:\nAV=λVAV=λV, where\nA = Feature matrix\nV = eigen vector\nλλ = Eigen value.\nA larger eigenvalue implies that the corresponding eigenvector captures more of the variance in the data.The sum of all eigenvalues equals the total variance in the original data. Therefore, the proportion of total variance explained by each principal component can be calculated by dividing its eigenvalue by the sum of all eigenvalues",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00121",
+    "question": "What is the cross-validation technique in machine learning?",
+    "answer": "Cross-validation is a resampling technique used in machine learning to assess and validate the performance of a predictive model. It helps in estimating how well a model is likely to perform on unseen data, making it a crucial step in model evaluation and selection. Cross validation is usually helpful when avoiding overfitting the model. Some of the widely known cross validation techniques are:\nK-Fold Cross-Validation: In this, the data is divided into K subsets, and K iterations of training and testing are performed.\nStratified K-Fold Cross-Validation: This technique ensures that each fold has approximately the same proportion of classes as the original dataset (helpful in handling data imbalance)\nShuffle-Split Cross-Validation: It randomly shuffles the data and splits it into training and testing sets.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00122",
+    "question": "What are the ROC and AUC, explain its significance in binary classification.",
+    "answer": "Receiver Operating Characteristic (ROC) is a graphical representation of a binary classifier’s performance. It plots the true positive rate (TPR) vs the false positive rate (FPR) at different classification thresholds.\nTrue positive rate (TPR) : It is the ratio of true positive predictions to the total actual positives.\nRecall = TP / (TP + FN)\n\nFalse positive rate (FPR) : It is the ratio of False positive predictions to the total actual positives.\nFPR= FP / (TP + FN)\n\n \nArea Under the Curve (AUC) as the name suggests is the area under the ROC curve. The AUC is a scalar value that quantifies the overall performance of a binary classification model and ranges from 0 to 1, where a model with an AUC of 0.5 indicates random guessing, and an AUC of 1 represents a perfect classifier.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00123",
+    "question": "Describe gradient descent and its role in optimizing machine learning models.",
+    "answer": "Gradient descent is a fundamental optimization algorithm used to minimize a cost or loss function in machine learning and deep learning. Its primary role is to iteratively adjust the parameters of a machine learning model to find the values that minimize the cost function, thereby improving the model’s predictive performance. Here’s how Gradient descent help in optimizing Machine learning models:\nMinimizing Cost functions: The primary goal of gradient descent is to find parameter values that result in the lowest possible loss on the training data.\nConvergence: The algorithm continues to iterate and update the parameters until it meets a predefined convergence criterion, which can be a maximum number of iterations or achieving a desired level of accuracy.\nGeneralization: Gradient descent ensure that the optimized model generalizes well to new, unseen data.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00124",
+    "question": "Describe batch gradient descent, stochastic gradient descent, and mini-batch gradient descent.",
+    "answer": "Batch Gradient Descent: In Batch Gradient Descent, the entire training dataset is used to compute the gradient of the cost function with respect to the model parameters (weights and biases) in each iteration. This means that all training examples are processed before a single parameter update is made. It converges to a more accurate minimum of the cost function but can be slow, especially in a high dimensionality space.\nStochastic Gradient Descent: In Stochastic Gradient Descent, only one randomly selected training example is used to compute the gradient and update the parameters in each iteration. The selection of examples is done independently for each iteration. This is capable of faster updates and can handle large datasets because it processes one example at a time but high variance can cause it to converge slower.\nMini-Batch Gradient Descent: Mini-Batch Gradient Descent strikes a balance between BGD and SGD. It divides the training dataset into small, equally-sized subsets called mini-batches. In each iteration, a mini-batch is randomly sampled, and the gradient is computed based on this mini-batch. It utilizes parallelism well and takes advantage of modern hardware like GPUs but can still exhibits some level of variance in updates compared to Batch Gradient Descent.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00125",
+    "question": "Explain the Apriori — Association Rule Mining",
+    "answer": "Association Rule mining is an algorithm to find relation between two or more different objects. Apriori association is one of the most frequently used and most simple association technique. Apriori Association uses prior knowledge of frequent objects properties. It is based on Apriori property which states that:\n“All non-empty subsets of a frequent itemset must also be frequent”\nData Science Interview Questions for Experienced",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00126",
+    "question": "Explain multivariate distribution in data science.",
+    "answer": "A vector with several normally distributed variables is said to have a multivariate normal distribution if any linear combination of the variables likewise has a normal distribution. The multivariate normal distribution is used to approximatively represent the features of specific characteristics in machine learning, but it is also important in extending the central limit theorem to several variables.\nQ.81 Describe the concept of conditional probability density function (PDF).\nIn probability theory and statistics, the conditional probability density function (PDF) is a notion that represents the probability distribution of a random variable within a certain condition or constraint. It measures the probability of a random variable having a given set of values given a set of circumstances or events.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00127",
+    "question": "What is the cumulative distribution function (CDF), and how is it related to PDF?",
+    "answer": "The probability that a continuous random variable will take on particular values within a range is described by the Probability Density Function (PDF), whereas the Cumulative Distribution Function (CDF) provides the cumulative probability that the random variable will fall below a given value. Both of these concepts are used in probability theory and statistics to describe and analyse probability distributions. The PDF is the CDF’s derivative, and they are related by integration and differentiation.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00128",
+    "question": "What is ANOVA? What are the different ways to perform ANOVA tests?",
+    "answer": "The statistical method known as ANOVA, or Analysis of Variance, is used to examine the variation in a dataset and determine whether there are statistically significant variations between group averages. When comparing the means of several groups or treatments to find out if there are any notable differences, this method is frequently used.\nThere are several different ways to perform ANOVA tests, each suited for different types of experimental designs and data structures:\nOne-Way ANOVA\nTwo-Way ANOVA\nThree-Way ANOVA\nWhen conducting ANOVA tests we typically calculate an F-statistic and compare it to a critical value or use it to calculate a p-value.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00129",
+    "question": "How can you prevent gradient descent from getting stuck in local minima?",
+    "answer": "The local minima problem occurs when the optimization algorithm converges a solution that is minimum within a small neighbourhood of the current point but may not be the global minimum for the objective function.\nTo mitigate local minimal problems, we can use the following technique:\nUse initialization techniques like Xavier/Glorot and He to model trainable parameters. This will help to set appropriate initial weights for the optimization process.\nSet Adam or RMSProp as optimizer, these adaptive learning rate algorithms can adapt the learning rates for individual parameters based on historical gradients.\nIntroduce stochasticity in the optimization process using mini-batches, which can help the optimizer to escape local minima by adding noise to the gradient estimates.\nAdding more layers or neurons can create a more complex loss landscape with fewer local minima.\nHyperparameter tuning using random search cv and grid search cv helps to explore the parameter space more thoroughly suggesting right hyperparameters for training and reducing the risk of getting stuck in local minima.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00130",
+    "question": "Explain the Gradient Boosting algorithms in machine learning.",
+    "answer": "Gradient boosting techniques like XGBoost, and CatBoost are used for regression and classification problems. It is a boosting algorithm that combines the predictions of weak learners to create a strong model. The key steps involved in gradient boosting are:\nInitialize the model with weak learners, such as a decision tree.\nCalculate the difference between the target value and predicted value made by the current model.\nAdd a new weak learner to calculate residuals and capture the errors made by the current ensemble.\nUpdate the model by adding fraction of the new weak learner’s predictions. This updating process can be controlled by learning rate.\nRepeat the process from step 2 to 4, with each iteration focusing on correcting the errors made by the previous model.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00131",
+    "question": "Explain convolutions operations of CNN architecture?",
+    "answer": "In a CNN architecture, convolution operations involve applying small filters (also called kernels) to input data to extract features. These filters slide over the input image covering one small part of the input at a time, computing dot products at each position creating a feature map. This operation captures the similarity between the filter’s pattern and the local features in the input. Strides determine how much the filter moves between positions. The resulting feature maps capture patterns, such as edges, textures, or shapes, and are essential for image recognition tasks. Convolution operations help reduce the spatial dimensions of the data and make the network translation-invariant, allowing it to recognize features in different parts of an image. Pooling layers are often used after convolutions to further reduce dimensions and retain important information.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00132",
+    "question": "What is feed forward network and how it is different from recurrent neural network?",
+    "answer": "Deep learning designs that are basic are feedforward neural networks and recurrent neural networks. They are both employed for different tasks, but their structure and how they handle sequential data differ.\nFeed Forward Neural Network\nIn FFNN, the information flows in one direction, from input to output, with no loops\nIt consists of multiple layers of neurons, typically organized into an input layer, one or more hidden layers, and an output layer.\nEach neuron in a layer is connected to every neuron in the subsequent layer through weighted connections.\nFNNs are primarily used for tasks such as classification and regression, where they take a fixed-size input and produce a corresponding output\nRecurrent Neural Network\nA recurrent neural network is designed to handle sequential data, where the order of input elements matters. Unlike FNNs, RNNs have connections that loop back on themselves, allowing them to maintain a hidden state that carries information from previous time steps.\nThis hidden state enables RNNs to capture temporal dependencies and context in sequential data, making them well-suited for tasks like natural language processing, time series analysis, and sequence generation.\nHowever, standard RNNs have limitations in capturing long-range dependencies due to the vanishing gradient problem.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00133",
+    "question": "Explain the difference between generative and discriminative models?",
+    "answer": "Generative models focus on generating new data samples, while discriminative models concentrate on classification and prediction tasks based on input data.\nGenerative Models:\nObjective: Model the joint probability distribution P(X, Y) of input X and target Y.\nUse: Generate new data, often for tasks like image and text generation.\nExamples: Variational Autoencoders (VAEs), Generative Adversarial Networks (GANs).\nDiscriminative Models:\nObjective: Model the conditional probability distribution P(Y | X) of target Y given input X.\nUse: Classify or make predictions based on input data.\nExamples: Logistic Regression, Support Vector Machines, Convolutional Neural Networks (CNNs) for image classification.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00134",
+    "question": "What is the forward and backward propogations in deep learning?",
+    "answer": "Forward and backward propagations are key processes that occur during neural network training in deep learning. They are essential for optimizing network parameters and learning meaningful representations from input.\nThe process by which input data is passed through the neural network to generate predictions or outputs is known as forward propagation. The procedure begins at the input layer, where data is fed into the network. Each neuron in a layer calculates the weighted total of its inputs, applies an activation function, and sends the result to the next layer. This process continues through the hidden layers until the final output layer produces predictions or scores for the given input data.\nThe technique of computing gradients of the loss function with regard to the network’s parameters is known as backward propagation. It is utilized to adjust the neural network parameters during training using optimization methods such as gradient descent.\nThe process starts with the computation of the loss, which measures the difference between the network’s predictions and the actual target values. Gradients are then computed by using the chain rule of calculus to propagate this loss backward through the network. This entails figuring out how much each parameter contributed to the error. The computed gradients are used to adjust the network’s weights and biases, reducing the error in subsequent forward passes.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00135",
+    "question": "Describe the use of Markov models in sequential data analysis?",
+    "answer": "Markov models are effective methods for capturing and modeling dependencies between successive data points or states in a sequence. They are especially useful when the current condition is dependent on earlier states. The Markov property, which asserts that the future state or observation depends on the current state and is independent of all prior states. There are two types of Markov models used in sequential data analysis:\nMarkov chains are the simplest form of Markov models, consisting of a set of states and transition probabilities between these states. Each state represents a possible condition or observation, and the transition probabilities describe the likelihood of moving from one state to another.\nHidden Markov Models extend the concept of Markov chains by introducing a hidden layer of states and observable emissions associated with each hidden state. The true state of the system (hidden state) is not directly observable, but the emissions are observable.\nApplications:\nHMMs are used to model phonemes and words in speech recognition systems, allowing for accurate transcription of spoken language\nHMMs are applied in genomics for gene prediction and sequence alignment tasks. They can identify genes within DNA sequences and align sequences for evolutionary analysis.\nMarkov models are used in modeling financial time series data, such as stock prices, to capture the dependencies between consecutive observations and make predictions.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00136",
+    "question": "What is generative AI?",
+    "answer": "Generative AI is an abbreviation for Generative Artificial Intelligence, which refers to a class of artificial intelligence systems and algorithms that are designed to generate new, unique data or material that is comparable to, or indistinguishable from, human-created data. It is a subset of artificial intelligence that focuses on the creative component of AI, allowing machines to develop innovative outputs such as writing, graphics, audio, and more. There are several generative AI models and methodologies, each adapted to different sorts of data and applications such as:\nGenerative AI models such as GPT (Generative Pretrained Transformer) can generate human-like text.” Natural language synthesis, automated content production, and chatbot responses are all common uses for these models.\nImages are generated using generative adversarial networks (GANs).” GANs are made up of a generator network that generates images and a discriminator network that determines the authenticity of the generated images. Because of the struggle between the generator and discriminator, high-quality, realistic images are produced.\nGenerative AI can also create audio content, such as speech synthesis and music composition.” Audio content is generated using models such as WaveGAN and Magenta.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00137",
+    "question": "What are different neural network architecture used to generate artificial data in deep learning?",
+    "answer": "Various neural networks are used to generate artificial data. Here are some of the neural network architectures used for generating artificial data:\nGANs consist of two components – generator and discriminator, which are trained simultaneously through adversarial training. They are used to generating high-quality images, such as photorealistic faces, artwork, and even entire scenes.\nVAEs are generative models that learn a probabilistic mapping from the data space to a latent space. They also consist of encoder and decoder. They are used for generating images, reconstructing missing parts of images, and generating new data samples. They are also applied in generating text and audio.\nRNNs are a class of neural networks with recurrent connections that can generate sequences of data. They are often used for sequence-to-sequence tasks. They are used in text generation, speech synthesis, music composition.\nTransformers are a type of neural network architecture that has gained popularity for sequence-to-sequence tasks. They use self-attention mechanisms to capture dependencies between different positions in the input data. They are used in natural language processing tasks like machine translation, text summarization, and language generation.\nAutoencoders are neural networks that are trained to reconstruct their input data. Variants like denoising autoencoders and contractive autoencoders can be used for data generation. They are used for image denoising, data inpainting, and generating new data samples.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00138",
+    "question": "What is deep reinforcement learning technique?",
+    "answer": "Deep Reinforcement Learning (DRL) is a cutting-edge machine learning technique that combines the principles of reinforcement learning with the capability of deep neural networks. Its ability to enable machines to learn difficult tasks independently by interacting with their environments, similar to how people learn via trial and error, has garnered significant attention.\nDRL is made up of three fundamental components:\nThe agent interacts with the environment and takes decision.\nThe environment is the outside world with which the agent interacts and receives feedback.\nThe reward signal is a scalar value provided by the environment after each action, guiding the agent toward maximizing cumulative rewards over time.\nApplications:\nIn robotics, DRL is used to control robots, manipulation and navigation.\nDRL plays a role in self-driving cars and vehicle control\nCan also be used for customized recommendations",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00139",
+    "question": "What is transfer learning, and how is it applied in deep learning?",
+    "answer": "Transfer learning is a strong machine learning and deep learning technique that allows models to apply knowledge obtained from one task or domain to a new, but related. It is motivated by the notion that what we learn in one setting can be applied to a new, but comparable, challenge.\nBenefits of Transfer Learning:\nWe may utilize knowledge from a large dataset by starting with a pretrained model, making it easier to adapt to a new task with data.\nTraining a deep neural network from scratch can be time-consuming and costly in terms of compute. Transfer learning enables us to bypass the earliest phases of training, saving both time and resources.\nPretrained models frequently learn rich data representations. Models that use these representations can generalize better, even when the target task has a smaller dataset.\nTransfer Learning Process:\nFeature Extraction\nIt’s a foundation step in transfer learning. The pretrained data is already trained on large and diverse dataset for a related task.\nTo leverage the knowlege, output layers of the pretrained model are removed leaving the layers responsible for feature extraction. The target data is passed through these layers to extract feature information.\nusing these extracted features, the model captures patterns and representations from the data.\nFine Tuning\nAfter the feature extraction process, the model is fine-tuned for the specific target task.\nOutput layers are added to the model and these layer are designed to produce the desired output for the target task.\nBackpropagation is used to iteratively update the model’s weights during fine-tuning. This method allows the model to tailor its representations and decision boundaries to the specifics of the target task.\nEven as the model focuses in the target task, the knowledge and features learned from the pre-trained layers continue to contribute to its understanding. This dual learning process improves the model’s performance and enables it to thrive in tasks that require little data or resources.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00140",
+    "question": "What is difference between object detections and image segmentations.",
+    "answer": "Object detection and Image segmentation are both computer vision tasks that entail evaluating and comprehending image content, but they serve different functions and give different sorts of information.\nObject Detection:\ngoal of object detection is to identify and locate objects and represent the object in bounding boxes with their respective labels.\nused in applications like autonomous driving for detecting pedestrians and vehicle\nImage Segmentation:\nfocuses on partitioning an image into multiple regions, where each segment corresponding to a coherent part of the image.\nprovide pixel level labeling of the entire image\nused in applications that require pixel level understanding such as medical image analysis for organ and tumor delineation.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00141",
+    "question": "Explain the concept of word embeddings in natural language processing (NLP).",
+    "answer": "In NLP, the concept of word embedding is use to capture semantic and contextual information. Word embeddings are dense representations of words or phrases in continuous-valued vectors in a high-dimensional space. Each word is mapped to a vector with the real numbers, these vectors are learned from large corpora of text data.\nWord embeddings are based on the Distributional Hypothesis, which suggests that words that appear in similar context have similar meanings. This idea is used by word embedding models to generate vector representations that reflect the semantic links between words depending on how frequently they co-occur with other words in the text.\nThe most common word embeddings techniques are-\nBag of Words (BOW)\nWord2Vec\nGlove: Global Vector for word representation\nTerm frequency-inverse document frequency (TF-IDF)\nBERT",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00142",
+    "question": "What is seq2seq model?",
+    "answer": "A neural network architecture called a Sequence-to-Sequence (Seq2Seq) model is made to cope with data sequences, making it particularly helpful for jobs involving variable-length input and output sequences. Machine translation, text summarization, question answering, and other tasks all benefit from its extensive use in natural language processing.\nThe Seq2Seq consists of two main components: encoder and decoder. The encoder takes input sequence and converts into fixed length vector . The vector captures features and context of the sequence. The decoder takes the vector as input and generated output sequence. This autoregressive technique frequently entails influencing the subsequent prediction using the preceding one.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00143",
+    "question": "What is artificial neural networks.",
+    "answer": "Artificial neural networks take inspiration from structure and functioning of human brain. The computational units in ANN are called neurons and these neurons are responsible to process and pass the information to the next layer.\nANN has three main components:\nInput Layer: where the network receives input features.\nHidden Layer: one or more layers of interconnected neurons responsible for learning patterns in the data\nOutput Layer: provides final output on processed information.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00144",
+    "question": "What is marginal probability?",
+    "answer": "A key idea in statistics and probability theory is marginal probability, which is also known as marginal distribution. With reference to a certain variable of interest, it is the likelihood that an event will occur, without taking into account the results of other variables. Basically, it treats the other variables as if they were “marginal” or irrelevant and concentrates on one.\nMarginal probabilities are essential in many statistical analyses, including estimating anticipated values, computing conditional probabilities, and drawing conclusions about certain variables of interest while taking other variables’ influences into account.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00145",
+    "question": "What are the probability axioms?",
+    "answer": "The fundamental rules that control the behaviour and characteristics of probabilities in probability theory and statistics are referred to as the probability axioms, sometimes known as the probability laws or probability principles.\nThere are three fundamental axioms of probability:\nNon-Negativity Axiom\nNormalization Axiom\nAdditivity Axiom",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00146",
+    "question": "How do you deal with a categorical variable which has high cardinality?",
+    "answer": "Dealing with high cardinality in categorical variables is a common challenge in data science, as it can lead to increased memory usage and reduced model performance. Here are some effective strategies to handle this:\n\n1. Frequency Encoding: Replace each category with the frequency or count of that category in the dataset. This approach maintains the weight of each category based on its occurrence.\n\n2. Target Encoding: Calculate the mean of the target variable for each category and replace the category value with this mean. This method is particularly useful when there’s a correlation between the categorical feature and the target, but it can lead to overfitting if not properly regularized.\n\n3. Feature Hashing (Hashing Trick): Use a hash function to reduce the number of unique categories by mapping multiple categories to the same bucket. This can significantly reduce the dimensionality but might introduce some collisions where different values get the same hash.\n\n4. Dimensionality Reduction Techniques: Techniques such as PCA (Principal Component Analysis) can be adapted for categorical variables through methods like MCA (Multiple Correspondence Analysis) to reduce the number of categorical levels into a smaller set of dimensions.\n\n5. Rare Category Aggregation: Combine categories that appear infrequently into a single ‘Other’ category. This reduces the problem of overfitting that might occur with rare categories.\n\n6. Binary Encoding: Instead of a simple one-hot encoding, binary encoding converts the integers (obtained from categorical values) into binary code, and then splits the bits into separate columns. This reduces the data dimension but keeps more information than one-hot encoding if there are many categories.\n\n7. Use of Domain Knowledge: If applicable, use domain knowledge to merge categories in a meaningful way or to discard irrelevant categories.\n\n8. Embedding Layers: Particularly in neural networks, use embedding layers which can learn an optimal representation of categorical data during the training process.",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00147",
+    "question": "Explain the central limit theorem and give examples of when you can use it in a real-world problem.",
+    "answer": "The central limit theorem states that if any random variable, regardless of the distribution, is sampled a large enough time, the sample mean will be approximately normally distributed. This allows for studying the properties of any statistical distribution as long as there is a large enough sample size.\nWe can rely on the CLT with means (because it applies to any unbiased statistic) only if expressing data in this way makes sense. And it makes sense ONLY in the case of unimodal and symmetric data, coming from additive processes. So forget skewed, multi-modal data with mixtures of distributions, coming from multiplicative processes, and non-trivial mean-variance relationships. That are the places where arithmetic means is meaningless. Thus, using the CLT of e.g. bootstrap will give some valid answers to an invalid question.\nThe distribution of means isn't enough. Every single kind of inference requires the entire test statistic to follow a certain distribution. And the test statistic consists also of the estimate of variance. Never assume the same sample size sufficient for means will suffice for the entire test statistic. See an excerpt from Rand Wilcox attached. Especially do never believe in magic numbers like N=30.\nThink first about how to sensible describe your data, state the hypothesis of interest and then apply a valid method.\nExamples of real-world usage of CLT:\n1.\tThe CLT can be used at any company with a large amount of data. Consider companies like Uber/Lyft wants to test whether adding a new feature will increase the booked rides or not using hypothesis testing. So if we have a large number of individual ride X, which in this case is a Bernoulli random variable (since the rider will book a ride or not), we can estimate the statistical properties of the total number of bookings. Understanding and estimating these statistical properties play a significant role in applying hypothesis testing to your data and knowing whether adding a new feature will increase the number of booked riders or not.\n2.\tManufacturing plants often use the central limit theorem to estimate how many products produced by the plant are defective.\nCourse: Statistics/Probability",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00148",
+    "question": "Briefly explain the A/B testing and its application? What are some common pitfalls encountered in A/B testing?",
+    "answer": "A/B testing helps us to determine whether a change in something will cause a change in performance significantly or not. So in other words you aim to statistically estimate the impact of a given change within your digital product (for example). You measure success and counter metrics on at least 1 treatment vs 1 control group (there can be more than 1 XP group for multivariate tests).\nApplications:\n1.\tConsider the example of a general store that sells bread packets but not butter, for a year. If we want to check whether its sale depends on the butter or not, then suppose the store also sells butter and sales for next year are observed. Now we can determine whether selling butter can significantly increase/decrease or doesn't affect the sale of bread.\n2.\tWhile developing the landing page of a website you create 2 different versions of the page. You define a criteria for success eg. conversion rate. Then define your hypothesis Null hypothesis(H): No difference between the performance of the 2 versions. Alternative hypothesis(H'): version A will perform better than B.\nNOTE: You will have to split your traffic randomly(to avoid sample bias) into 2 versions. The split doesn't have to be symmetric, you just need to set the minimum sample size for each version to avoid undersample bias.\nNow if version A gives better results than version B, we will still have to statistically prove that results derived from our sample represent the entire population. Now one of the very common tests used to do so is 2 sample t-test where we use values of significance level (alpha) and p-value to see which hypothesis is right. If p-value<alpha, H is rejected.\nCommon pitfalls:\n1.\tWrong success metrics inadequate to the business problem\n2.\tLack of counter metric, as you might add friction to the product regardless along with the positive impact\n3.\tSample mismatch: heterogeneous control and treatment, unequal variances\n4.\tUnderpowered test: too small sample or XP running too short 5. Not accounting for network effects (introduce bias within measurement)\nCourse: Statistics/Probability",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00149",
+    "question": "Describe briefly the hypothesis testing and p-value in layman’s term? And give a practical application for them ?",
+    "answer": "In Layman's terms:\n•\tHypothesis test is where you have a current state (null hypothesis) and an alternative state (alternative hypothesis). You assess the results of both of the states and see some differences. You want to decide whether the difference is due to the alternative approach or not.\nYou use the p-value to decide this, where the p-value is the likelihood of getting the same results the alternative approach achieved if you keep using the existing approach. It's the probability to find the result in the gaussian distribution of the results you may get from the existing approach.\nThe rule of thumb is to reject the null hypothesis if the p-value < 0.05, which means that the probability to get these results from the existing approach is <95%. But this % changes according to task and domain.\nTo explain the hypothesis testing in Layman's term with an example, suppose we have two drugs A and B, and we want to determine whether these two drugs are the same or different. This idea of trying to determine whether the drugs are the same or different is called hypothesis testing. The null hypothesis is that the drugs are the same, and the p-value helps us decide whether we should reject the null hypothesis or not.\np-values are numbers between 0 and 1, and in this particular case, it helps us to quantify how confident we should be to conclude that drug A is different from drug B. The closer the p-value is to 0, the more confident we are that the drugs A and B are different.\nCourse: Statistics/Probability",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00150",
+    "question": "Given a left-skewed distribution that has a median of 60, what conclusions can we draw about the mean and the mode of the data?",
+    "answer": "Left skewed distribution means the tail of the distribution is to the left and the tip is to the right. So the mean which tends to be near outliers (very large or small values) will be shifted towards the left or in other words, towards the tail.\nWhile the mode (which represents the most repeated value) will be near the tip and the median is the middle element independent of the distribution skewness, therefore it will be smaller than the mode and more than the mean.\nMean < 60 Mode > 60\n \nCourse: Statistics/Probability",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00151",
+    "question": "What is the meaning of selection bias and how to avoid it?",
+    "answer": "Sampling bias is the phenomenon that occurs when a research study design fails to collect a representative sample of a target population. This typically occurs because the selection criteria for respondents failed to capture a wide enough sampling frame to represent all viewpoints.\nThe cause of sampling bias almost always owes to one of two conditions.\n1.\tPoor methodology: In most cases, non-representative samples pop up when researchers set improper parameters for survey research. The most accurate and repeatable sampling method is simple random sampling where a large number of respondents are chosen at random. When researchers stray from random sampling (also called probability sampling), they risk injecting their own selection bias into recruiting respondents.\n2.\tPoor execution: Sometimes data researchers craft scientifically sound sampling methods, but their work is undermined when field workers cut corners. By reverting to convenience sampling (where the only people studied are those who are easy to reach) or giving up on reaching non-responders, a field worker can jeopardize the careful methodology set up by data scientists.\nThe best way to avoid sampling bias is to stick to probability-based sampling methods. These include simple random sampling, systematic sampling, cluster sampling, and stratified sampling. In these methodologies, respondents are only chosen through processes of random selection—even if they are sometimes sorted into demographic groups along the way. \nCourse: Statistics/Probability",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00152",
+    "question": "Explain the long-tailed distribution and provide three examples of relevant phenomena that have long tails. Why are they important in classification and regression problems?",
+    "answer": "A long-tailed distribution is a type of heavy-tailed distribution that has a tail (or tails) that drop off gradually and asymptotically.\nThree examples of relevant phenomena that have long tails:\n1.\tFrequencies of languages spoken\n2.\tPopulation of cities\n3.\tPageviews of articles\nAll of these follow something close to 80-20 rule: 80% of outcomes (or outputs) result from 20% of all causes (or inputs) for any given event. This 20% forms the long tail in the distribution.\nIt’s important to be mindful of long-tailed distributions in classification and regression problems because the least frequently occurring values make up the majority of the population. This can ultimately change the way that you deal with outliers, and it also conflicts with some machine learning techniques with the assumption that the data is normally distributed.  \nCourse: Statistics/Probability",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00153",
+    "question": "What is the meaning of KPI in statistics",
+    "answer": "KPI stands for key performance indicator, a quantifiable measure of performance over time for a specific objective. KPIs provide targets for teams to shoot for, milestones to gauge progress, and insights that help people across the organization make better decisions. From finance and HR to marketing and sales, key performance indicators help every area of the business move forward at the strategic level.\nKPIs are an important way to ensure your teams are supporting the overall goals of the organization. Here are some of the biggest reasons why you need key performance indicators.\n•\tKeep your teams aligned: Whether measuring project success or employee performance, KPIs keep teams moving in the same direction.\n•\tProvide a health check: Key performance indicators give you a realistic look at the health of your organization, from risk factors to financial indicators.\n•\tMake adjustments: KPIs help you clearly see your successes and failures so you can do more of what’s working, and less of what’s not.\n•\tHold your teams accountable: Make sure everyone provides value with key performance indicators that help employees track their progress and help managers move things along.\nTypes of KPIs Key performance indicators come in many flavors. While some are used to measure monthly progress against a goal, others have a longer-term focus. The one thing all KPIs have in common is that they’re tied to strategic goals. Here’s an overview of some of the most common types of KPIs.\n•\tStrategic: These big-picture key performance indicators monitor organizational goals. Executives typically look to one or two strategic KPIs to find out how the organization is doing at any given time. Examples include return on investment, revenue and market share.\n•\tOperational: These KPIs typically measure performance in a shorter time frame, and are focused on organizational processes and efficiencies. Some examples include sales by region, average monthly transportation costs and cost per acquisition (CPA).\n•\tFunctional Unit: Many key performance indicators are tied to specific functions, such finance or IT. While IT might track time to resolution or average uptime, finance KPIs track gross profit margin or return on assets. These functional KPIs can also be classified as strategic or operational.\n•\tLeading vs Lagging: Regardless of the type of key performance indicator you define, you should know the difference between leading indicators and lagging indicators. While leading KPIs can help predict outcomes, lagging KPIs track what has already happened. Organizations use a mix of both to ensure they’re tracking what’s most important.\n \nCourse: Statistics/Probability",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00154",
+    "question": "Say you flip a coin 10 times and observe only one head. What would be the null hypothesis and p-value for testing whether the coin is fair or not?",
+    "answer": "The null hypothesis is that the coin is fair, and the alternative hypothesis is that the coin is biased. The p-value is the probability of observing the results obtained given that the null hypothesis is true, in this case, the coin is fair.\nIn total for 10 flips of a coin, there are 2^10 = 1024 possible outcomes and in only 10 of them are there 9 tails and one head.\nHence, the exact probability of the given result is the p-value, which is 10/1024 = 0.0098. Therefore, with a significance level set, for example, at 0.05, we can reject the null hypothesis.\nCourse: Statistics/Probability",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00155",
+    "question": "You are testing hundreds of hypotheses, each with a t-test. What considerations would you take into account when doing this?",
+    "answer": "The main consideration when we have a large number of tests is that probability of getting a significant test due to chance alone increases. This will increase the type 1 error (rejecting the null hypothesis when it's actually true).\nTherefore we need to consider the Bonferroni Effect which happens when we make many tests. Ex. If our significance level is 0.05 but we made a 100 test it means that the probability of getting a value inside the rejection rejoin is 0.0005, not 0.05 so here we need to use another significance level which's called alpha star = significance level /K Where K is the number of the tests.\nCourse: Statistics/Probability",
+    "course": "data_science"
+  },
+  {
+    "doc_id": "qa_00156",
+    "question": "What general conditions must be satisfied for the central limit theorem to hold? Course: Statistics/Probability",
+    "answer": "In order to apply the central limit theorem, there are four conditions that must be met:\n1.** Randomization:** The data must be sampled randomly such that every member in a population has an equal probability of being selected to be in the sample.\n2.\tIndependence: The sample values must be independent of each other.\n3.\tThe 10% Condition: When the sample is drawn without replacement, the sample size should be no larger than 10% of the population.\n4.\tLarge Sample Condition: The sample size needs to be sufficiently large.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00157",
+    "question": "What is skewness discuss two methods to measure it? Course: Statistics/Probability",
+    "answer": "Skewness refers to a distortion or asymmetry that deviates from the symmetrical bell curve, or normal distribution, in a set of data. If the curve is shifted to the left or to the right, it is said to be skewed.Skewness can be quantified as a representation of the extent to which a given distribution varies from a normal distribution. There are two main types of skewness negative skew which refers to a longer or fatter tail on the left side of the distribution, while positive skew refers to a longer or fatter tail on the right. These two skews refer to the direction or weight of the distribution.\nThe mean of positively skewed data will be greater than the median. In a negatively skewed distribution, the exact opposite is the case: the mean of negatively skewed data will be less than the median. If the data graphs symmetrically, the distribution has zero skewness, regardless of how long or fat the tails are.\nThere are several ways to measure skewness. Pearson’s first and second coefficients of skewness are two common methods. Pearson’s first coefficient of skewness, or Pearson mode skewness, subtracts the mode from the mean and divides the difference by the standard deviation. Pearson’s second coefficient of skewness, or Pearson median skewness, subtracts the median from the mean, multiplies the difference by three, and divides the product by the standard deviation.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00158",
+    "question": "You sample from a uniform distribution [0, d] n times. What is your best estimate of d?\nCourse: Statistics/Probability",
+    "answer": "Intuitively it is the maximum of the sample points.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00159",
+    "question": "Discuss the Chi-square, ANOVA, and t-test. \nCourse: Statistics/Probability",
+    "answer": "Chi-square test A statistical method is used to find the difference or correlation between the observed and expected categorical variables in the dataset.\nExample: A food delivery company wants to find the relationship between gender, location, and food choices of people.\nIt is used to determine whether the difference between 2 categorical variables is:\n•\tDue to chance or\n•\tDue to relationship\nAnalysis of Variance (ANOVA) is a statistical formula used to compare variances across the means (or average) of different groups. A range of scenarios uses it to determine if there is any difference between the means of different groups.\nt_test is a statistical method for the comparison of the mean of the two groups of the normally distributed sample(s).\nIt comes in various types such as:\n1.\tOne sample t-test:\nUsed to compare the mean of a sample and the population.\n2.\tTwo sample t-tests:\nUsed to compare the mean of two independent samples and whether their population is statistically different.\n3.\tPaired t-test:\nUsed to compare means of different samples from the same group.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00160",
+    "question": "Say you have two subsets of a dataset for which you know their means and standard deviations. How do you calculate the blended mean and standard deviation of the total dataset? Can you extend it to K subsets?\nCourse: Statistics/Probability",
+    "answer": "To calculate the blended mean and standard deviation for the total dataset given the means and standard deviations of subsets, we can use the following formulas:For 2 subsets:\nBlended Mean:\nLet n1 and n2 be the sizes of the two subsets, and m1 and m2 be their respective means.Blended Mean = (n1 * m1 + n2 * m2) / (n1 + n2)\nBlended Standard Deviation:\nLet s1 and s2 be the standard deviations of the two subsets.Blended Variance = ((n1 - 1) * s1^2 + (n2 - 1) * s2^2 + n1 * (m1 - m)^2 + n2 * (m2 - m)^2) / (n1 + n2 - 1)Where m is the blended mean calculated above.Blended Standard Deviation = sqrt(Blended Variance)\nExtending to K subsets:\nBlended Mean for K subsets:\nm = (n1 * m1 + n2 * m2 + ... + nk * mk) / (n1 + n2 + ... + nk)\nBlended Standard Deviation for K subsets:\nBlended Variance = (Σ(ni - 1) * si^2 + Σni * (mi - m)^2) / (Σni - 1)Where Σ represents the sum over all K subsets, ni is the size of subset i, si is the standard deviation of subset i, mi is the mean of subset i, and m is the blended mean calculated above.Blended Standard Deviation = sqrt(Blended Variance)",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00161",
+    "question": "What is the relationship between the significance level and the confidence level in Statistics?\nCourse: Statistics/Probability",
+    "answer": "Confidence level = 1 - significance level.\nIt's closely related to hypothesis testing and confidence intervals.\n⏺ Significance Level according to the hypothesis testing literature means the probability of Type-I error one is willing to tolerate.\n⏺ Confidence Level according to the confidence interval literature means the probability in terms of the true parameter value lying inside the confidence interval. They are usually written in percentages.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00162",
+    "question": "What is the Law of Large Numbers in statistics and how it can be used in data science? Course: Statistics/Probability",
+    "answer": "The law of large numbers states that as the number of trials in a random experiment increases, the average of the results obtained from the experiment approaches the expected value. In statistics, it's used to describe the relationship between sample size and the accuracy of statistical estimates.\nIn data science, the law of large numbers is used to understand the behavior of random variables over many trials. It's often applied in areas such as predictive modelling, risk assessment, and quality control to ensure that data-driven decisions are based on a robust and accurate representation of the underlying patterns in the data.\nThe law of large numbers helps to guarantee that the average of the results from a large number of independent and identically distributed trials will converge to the expected value, providing a foundation for statistical inference and hypothesis testing.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00163",
+    "question": "What is the difference between a confidence interval and a prediction interval, and how do you calculate them?Course: Statistics/Probability",
+    "answer": "A confidence interval is a range of values that is likely to contain the true value of a population parameter with a certain level of confidence. It is used to estimate the precision or accuracy of a sample statistic, such as a mean or a proportion, based on a sample from a larger population.\nFor example, if we want to estimate the average height of all adults in a certain region, we can take a random sample of individuals from that region and calculate the sample mean height. Then we can construct a confidence interval for the true population mean height, based on the sample mean and the sample size, with a certain level of confidence, such as 95%. This means that if we repeat the sampling process many times, 95% of the resulting intervals will contain the true population mean height.\nThe formula for a confidence interval is: confidence interval = sample statistic +/- margin of error\nThe margin of error depends on the sample size, the standard deviation of the population (or the sample, if the population standard deviation is unknown), and the desired level of confidence. For example, if the sample size is larger or the standard deviation is smaller, the margin of error will be smaller, resulting in a narrower confidence interval.\nA prediction interval is a range of values that is likely to contain a future observation or outcome with a certain level of confidence. It is used to estimate the uncertainty or variability of a future value based on a statistical model and the observed data.\nFor example, if we have a regression model that predicts the sales of a product based on its price and advertising budget, we can use a prediction interval to estimate the range of possible sales for a new product with a certain price and advertising budget, with a certain level of confidence, such as 95%. This means that if we repeat the prediction process many times, 95% of the resulting intervals will contain the true sales value.\nThe formula for a prediction interval is: prediction interval = point estimate +/- margin of error\nThe point estimate is the predicted value of the outcome variable based on the model and the input variables. The margin of error depends on the residual standard deviation of the model, which measures the variability of the observed data around the predicted values, and the desired level of confidence. For example, if the residual standard deviation is larger or the level of confidence is higher, the margin of error will be larger, resulting in a wider prediction interval.",
+    "course": "statistics/probability"
+  },
+  {
+    "doc_id": "qa_00164",
+    "question": "What are joins in SQL and discuss its types? Course: SQL",
+    "answer": "A JOIN clause is used to combine rows from two or more tables, based on a related column between them. It is used to merge two tables or retrieve data from there. There are 4 types of joins: inner join left join, right join, and full join.\nInner join: Inner Join in SQL is the most common type of join. It is used to return all the rows from multiple tables where the join condition is satisfied.\nLeft Join: Left Join in SQL is used to return all the rows from the left table but only the matching rows from the right table where the join condition is fulfilled.\nRight Join: Right Join in SQL is used to return all the rows from the right table but only the matching rows from the left table where the join condition is fulfilled.\nFull Join: Full join returns all the records when there is a match in any of the tables. Therefore, it returns all the rows from the left-hand side table and all the rows from the right-hand side table.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00165",
+    "question": "Define the primary, foreign, and unique keys and the differences between them? Course: SQL",
+    "answer": "Primary key: Is a key that is used to uniquely identify each row or record in the table, it can be a single column or composite pk that contains more than one column\nThe primary key doesn't accept null or repeated values\nThe purpose of the primary key is to keep the Entity's integrity\nThere is only one PK in each table\nEvery row must have a unique primary key\nForeign key: Is a key that is used to identify, show or describe the relationship between tuples of two tables. It acts as a cross-reference between tables because it references the primary key of another table, thereby establishing a link between them.\nThe purpose of the foreign key is to keep data integrity\nIt can contain null values or primary key values\nUnique key: It's a key that can identify each row in the table as the primary key but it can contain one null value\nEvery table can have more than one Unique key",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00166",
+    "question": "What is the difference between BETWEEN and IN operators in SQL? Course: SQL",
+    "answer": "The SQL BETWEEN operator selects values within a given range. It is inclusive of both the ranges, begin and end values are included. The values can be text, date, numbers, or other\nFor example, select * from tablename where price BETWEEN 10 and 100;\nThe IN operator is used to select rows in which a certain value exists in a given field. It is used with the WHERE clause to match values in a list.\nFor example, select COLUMN from tablename where 'USA' in (country);\nIN is mainly best for categorical variables(it can be used with Numerical as well) whereas Between is for Numerical Variables",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00167",
+    "question": "Assume you have the given table below which contains information on user logins. The table provides the structure of a dataset with two columns:\n1.\tUser id:\no\tType: Integer\no\tDescription: This column stores the unique identifier for each user, represented as an integer.\n2.\tLogin date:\no\tType: Datetime\no\tDescription: This column stores the date and time when the user logged in, represented as a datetime type.\nWrite a query to obtain the number of reactivated users (Users who did not log in the previous month and then logged in the current month). Course: SQL",
+    "answer": "First, we look at all the users who did not log in during the previous month. To obtain the last month's data, we subtract an 𝐈𝐍𝐓𝐄𝐑𝐕𝐀𝐋 of 1 month from the current month's login date. Then, we use 𝐖𝐇𝐄𝐑𝐄 𝐄𝐗𝐈𝐒𝐓𝐒 against the previous month's interval to check whether there was login in the previous month. Finally, we 𝗖𝗢𝗨𝗡𝗧 the number of users satisfying this condition.\nSELECT \n    DATE_TRUNC('month', current_month.login_date) AS current_month,\n    COUNT(*) AS num_reactivated_users \nFROM \n    user_logins current_month\nWHERE\n    NOT EXISTS (\n      SELECT \n        *\n      FROM \n        user_logins last_month\n      WHERE\n        DATE_TRUNC('month', last_month.login_date) BETWEEN DATE_TRUNC('month', current_month.login_date) AND DATE_TRUNC('month', current_month.login_date) - INTERVAL '1 month'\n)",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00168",
+    "question": "Describe the advantages and disadvantages of relational database vs NoSQL databases. Course: SQL",
+    "answer": "Advantages of Relational Databases: Ensure data integrity through a defined schema and ACID properties. Easy to get started with and use for small-scale applications. Lends itself well to vertical scaling. Uses an almost standard query language, making learning or switching between types of relational databases easy.\nAdvantages of NoSQL Databases: Offers more flexibility in data format and representations, which makes working with Unstructured or semistructured data easier. Hence, useful when still the data schema or adding new features/functionality rapidly like in a startup environment to scale with horizontal scaling. Lends itself better to applications that need to be highly available.\nDisadvantages of Relational Databases: Data schema needs to be known in advance. Ale schemas is possible, but frequent changes to the schema for large tables can cause performance issues. Horizontal scaling is relatively difficult, leading to eventual performance bottlenecks\nDisadvantages of NoSQL Databases: As outlined by the BASE framework, weaker guarantees of data correctness are made due to the soft-state and eventual consistency property. Managing consistency can also be difficult due to the lack of a predefined schema that's strictly adhered to. Depending on the type of NoSQL database, it can be challenging for the database to handle its types of complex queries or access patterns.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00169",
+    "question": "Assume you are given the table on user transactions. \nHere is the description of the table of a dataset with three columns:\n1.\tUser ID:\no\tType: Integer\no\tDescription: This column contains unique identifiers for users, represented as integers.\n2.\tSpend:\no\tType: Float\no\tDescription: This column represents the amount of money spent by the user, stored as a floating-point number (which allows for decimals).\n3.\tTransaction Date:\no\tType: Datetime\no\tDescription: This column records the date and time when the transaction occurred, stored as a datetime type for easy manipulation and comparison of dates.\nWrite a query to obtain the third transaction of every user. Course: SQL",
+    "answer": "First, we obtain the transaction numbers for each user. We can do this by using the ROW_NUMBER window function, where we PARTITION by the user_id and ORDER by the transaction_date fields, calling the resulting field a transaction number. From there, we can simply take all transactions having a transaction number equal to 3\nWITH nums AS (\n    SELECT *,\n        ROW_NUMBER() OVER (\n            PARTITION BY user_id\n            ORDER BY transaction_date\n        ) AS trans_num\n    FROM transactions\n)\nSELECT \n    user_id,\n    spend,\n    transcaation_date\nFROM \n    nums\nWHERE \n    trans_num = 3;",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00170",
+    "question": "What do you understand by Self Join? Explain using an example. Course: SQL",
+    "answer": "Self-join is as its name implies, joining a table to itself on a database, this process may come in handy in a number of cases, such as:\n1- comparing the table's rows to themselves:\nIt's like we have two copies of the same table and join them together on a given condition to reach the required output query.\nEx. If we have a store database with a client's data table holding a bunch of demographics, we could self-join the client's table to get clients who are located in the same city/made a purchase on the same day/etc.\n2- querying a table that has hierarchical data:\nMeaning, the table has a primary key that has a one-to-many relationship with another foreign key inside the same table, in other words, the table has data that refers to the same table. We could use self-join in order to have a clear look at the data by matching its keys.\nEx. The organizational structure of a company may contain an employee table that has an employee id and his manager id (who is also an employee, hence has an employee id too) in the same table. Using self-join on this table would allow us to reference every employee directly to his manager.\nP.S. we would need to take care of duplicates that may occur and consider them in the conditions.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00171",
+    "question": "Write an SQL query to join 3 tables",
+    "answer": "SELECT \n    c.customer_id, \n    c.customer_name, \n    o.order_id, \n    p.product_name, \n    o.order_date\nFROM \n    Customers c\nJOIN \n    Orders o ON c.customer_id = o.customer_id\nJOIN \n    Products p ON o.product_id = p.product_id;",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00172",
+    "question": "Write a SQL query to get the third-highest salary of an employee from employee table and arrange them in descending order.",
+    "answer": "SELECT DISTINCT salary\nFROM Employee\nORDER BY salary DESC\nLIMIT 1 OFFSET 2;",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00173",
+    "question": "What is the difference between temporary tables and common table expressions? Course: SQL",
+    "answer": "𝗧𝗲𝗺𝗽𝗼𝗿𝗮𝗿𝘆 𝘁𝗮𝗯𝗹𝗲𝘀 and 𝗖𝗧𝗘s are both used to store intermediate results in MySQL, but there are some key differences between the two:\n𝗗𝗲𝗳𝗶𝗻𝗶𝘁𝗶𝗼𝗻: A temporary table is a physical table that is created in the database and persists until it is explicitly dropped or the session ends. A CTE is a virtual table that is defined only within the scope of a single SQL statement.\n𝗦𝘁𝗼𝗿𝗮𝗴𝗲: Temporary tables are stored in the database and occupy physical disk space. CTEs are not stored on disk and exist only in memory for the duration of the query.\n𝗔𝗰𝗰𝗲𝘀𝘀: Temporary tables can be accessed from any session that has the appropriate privileges. CTEs are only accessible within the scope of the query in which they are defined.\n𝗟𝗶𝗳𝗲𝘀𝗽𝗮𝗻: Temporary tables persist until they are explicitly dropped or the session ends. CTEs are only available for the duration of the query in which they are defined and are then discarded.\n𝗦𝘆𝗻𝘁𝗮𝘅: Temporary tables are created using the CREATE TEMPORARY TABLE statement, while CTEs are defined using the WITH clause.\n𝗣𝘂𝗿𝗽𝗼𝘀𝗲: Temporary tables are typically used to store intermediate results that will be used in multiple queries, while CTEs are used to simplify complex queries by breaking them down into smaller, more manageable parts.\nIn summary, temporary tables are physical tables that persist in the database and can be accessed from any session, while CTEs are virtual tables that exist only within the scope of a single query and are discarded once the query is complete. Both temporary tables and CTEs can be useful tools for simplifying complex queries and storing intermediate results.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00174",
+    "question": "Why use Right Join When Left Join can suffice the requirement? Course: SQL",
+    "answer": "In MySQL, the 𝗥𝗜𝗚𝗛𝗧 𝗝𝗢𝗜𝗡 𝗮𝗻𝗱 𝗟𝗘𝗙𝗧 𝗝𝗢𝗜𝗡 are used to retrieve data from multiple tables by joining them based on a specified condition.\nGenerally, the 𝗟𝗘𝗙𝗧 𝗝𝗢𝗜𝗡 is used more frequently than the 𝗥𝗜𝗚𝗛𝗧 𝗝𝗢𝗜𝗡 because it returns all the rows from the left table and matching rows from the right table, or NULL values if there is no match.\nIn most cases, a 𝗟𝗘𝗙𝗧 𝗝𝗢𝗜𝗡 is sufficient to meet the requirement of retrieving all the data from the left table and matching data from the right table.\nHowever, there may be situations where using a 𝗥𝗜𝗚𝗛𝗧 𝗝𝗢𝗜𝗡 is more appropriate.\nHere are a few examples:\n𝟭. 𝗪𝗵𝗲𝗻 𝘁𝗵𝗲 𝗽𝗿𝗶𝗺𝗮𝗿𝘆 𝘁𝗮𝗯𝗹𝗲 𝗶𝘀 𝘁𝗵𝗲 𝗿𝗶𝗴𝗵𝘁 𝘁𝗮𝗯𝗹𝗲: If the right table contains the primary data that needs to be retrieved, and the left table contains supplementary data, a 𝗥𝗜𝗚𝗛𝗧 𝗝𝗢𝗜𝗡 can be used to retrieve all the data from the right table and matching data from the left table.\n𝟮. 𝗪𝗵𝗲𝗻 𝘁𝗵𝗲 𝗾𝘂𝗲𝗿𝘆 𝗻𝗲𝗲𝗱𝘀 𝘁𝗼 𝗯𝗲 𝗼𝗽𝘁𝗶𝗺𝗶𝘇𝗲𝗱: In some cases, a 𝗥𝗜𝗚𝗛𝗧 𝗝𝗢𝗜𝗡 may be more efficient than a 𝗟𝗘𝗙𝗧 𝗝𝗢𝗜𝗡 because the database optimizer can choose the most efficient join order based on the query structure and the available indexes.\n𝟯. 𝗪𝗵𝗲𝗻 𝘂𝘀𝗶𝗻𝗴 𝗼𝘂𝘁𝗲𝗿 𝗷𝗼𝗶𝗻𝘀: If the query requires an outer join, a 𝗥𝗜𝗚𝗛𝗧 𝗝𝗢𝗜𝗡 may be used to return all the rows from the right table, including those with no matching rows in the left table. It's important to note that while a 𝗥𝗜𝗚𝗛𝗧 𝗝𝗢𝗜𝗡 can provide additional functionality in certain cases, it may also make the query more complex and difficult to read. In most cases, a 𝗟𝗘𝗙𝗧 𝗝𝗢𝗜𝗡 is the preferred method for joining tables in MySQL.",
+    "course": "sql"
+  },
+  {
+    "doc_id": "qa_00175",
+    "question": "Why Rank skips sequence? Course: SQL",
+    "answer": "In MySQL, the rank function may skip a sequence of numbers when using the DENSE_RANK() function or the RANK() function, depending on the data and the query. The DENSE_RANK() function assigns a unique rank to each distinct value in a result set, whereas the RANK() function assigns the same rank to the duplicate values.\nHere are some of the reasons why the rank function may skip a sequence in MySQL:\n𝗧𝗵𝗲 𝗗𝗘𝗡𝗦𝗘_𝗥𝗔𝗡𝗞() function skips ranks when there are ties. For example, if there are two rows with the same values in the ranking column, both will be assigned the same rank, and the next rank will be incremented by 1.\n𝗧𝗵𝗲 𝗥𝗔𝗡𝗞() function skips ranks when there are gaps between the duplicate values. For example, if there are three rows with the same values in the ranking column, and then the next row has a higher value, the RANK() function will skip over the fourth rank.\nThe query may have filtering or grouping clauses that affect the ranking. For example, if a query filters out some rows or groups them by a different column, the ranking may not be sequential.\nIt's important to note that the ranking function in MySQL behaves differently from the ranking function in other databases, so the same query may produce different results in different database systems.",
+    "course": "sql"
+  }
+]
